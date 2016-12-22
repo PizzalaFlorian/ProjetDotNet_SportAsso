@@ -41,3 +41,18 @@ textarea {
     flex-direction:column;
     flex-wrap:wrap;
 }
+
+.pad5{
+    padding: 5px;
+}
+
+.fullSize{
+    width:100%;
+}
+
+.w80{
+    width:80%;
+}
+.w20{
+    width:20%;
+}
