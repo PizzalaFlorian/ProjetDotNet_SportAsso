@@ -2,12 +2,18 @@
     ViewBag.Title = "Accueil";
 }
 
+@model IEnumerable<SportAsso.discipline>
+
 <div class="flexRow">
     <div class="nav navbar-left collection w20">
         <a href="#!" class="collection-item active">Liste des Disciplines</a>
-        <a href="#!" class="collection-item">Profile</a>
-        <a href="#!" class="collection-item">Messages</a>
-    </div>
+        @foreach (var item in Model)
+        {
+            <a href="#@Html.DisplayFor(modelItem => item.discipline_id)" class="collection-item">
+                @Html.DisplayFor(modelItem => item.label)
+             </a>
+        }
+</div>
 
     <div class="panel panel-body pad5 w80">
         <div class="panel-heading">Découvrez les plaisirs du sport chez Sports Asso !</div>

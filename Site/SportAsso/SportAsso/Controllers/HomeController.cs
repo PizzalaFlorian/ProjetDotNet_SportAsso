@@ -6,11 +6,13 @@ using System.Web.Mvc;
 
 namespace SportAsso.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : Controller      
     {
+        private SportAssoEntities db = new SportAssoEntities();
         public ActionResult Index()
         {
-            return View();
+            var discipline = db.discipline;
+            return View(discipline.ToList());
         }
 
         public ActionResult About()

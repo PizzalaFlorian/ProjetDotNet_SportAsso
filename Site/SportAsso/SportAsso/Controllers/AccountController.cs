@@ -18,6 +18,8 @@ namespace SportAsso.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        private SportAssoEntities db = new SportAssoEntities();
+
         public AccountController()
         {
         }
