@@ -1,0 +1,50 @@
+﻿@model SportAsso.seance
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>seance</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.places_max)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.places_max)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lieu.label)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lieu.label)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.section.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.section.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.utilisateur.login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.utilisateur.login)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.seance_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

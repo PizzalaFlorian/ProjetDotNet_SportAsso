@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SportAssoModelStoreContainer" CdmEntityContainer="SportAssoEntities">
+    <EntitySetMapping Name="creneau">
+      <EntityTypeMapping TypeName="SportAssoModel.creneau">
+        <MappingFragment StoreEntitySet="creneau">
+          <ScalarProperty Name="creneau_id" ColumnName="creneau_id" />
+          <ScalarProperty Name="seance_id" ColumnName="seance_id" />
+          <ScalarProperty Name="heure_debut" ColumnName="heure_debut" />
+          <ScalarProperty Name="heure_fin" ColumnName="heure_fin" />
+          <ScalarProperty Name="jour_de_la_semaine" ColumnName="jour_de_la_semaine" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="discipline">
+      <EntityTypeMapping TypeName="SportAssoModel.discipline">
+        <MappingFragment StoreEntitySet="discipline">
+          <ScalarProperty Name="discipline_id" ColumnName="discipline_id" />
+          <ScalarProperty Name="responsable_discipline_id" ColumnName="responsable_discipline_id" />
+          <ScalarProperty Name="label" ColumnName="label" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="document">
+      <EntityTypeMapping TypeName="SportAssoModel.document">
+        <MappingFragment StoreEntitySet="document">
+          <ScalarProperty Name="document_id" ColumnName="document_id" />
+          <ScalarProperty Name="utilisateur_id" ColumnName="utilisateur_id" />
+          <ScalarProperty Name="type_document" ColumnName="type_document" />
+          <ScalarProperty Name="path_document" ColumnName="path_document" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="lieu">
+      <EntityTypeMapping TypeName="SportAssoModel.lieu">
+        <MappingFragment StoreEntitySet="lieu">
+          <ScalarProperty Name="lieu_id" ColumnName="lieu_id" />
+          <ScalarProperty Name="label" ColumnName="label" />
+          <ScalarProperty Name="adresse" ColumnName="adresse" />
+          <ScalarProperty Name="capacite_max" ColumnName="capacite_max" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="participe">
+      <EntityTypeMapping TypeName="SportAssoModel.participe">
+        <MappingFragment StoreEntitySet="participe">
+          <ScalarProperty Name="utilisateur_id" ColumnName="utilisateur_id" />
+          <ScalarProperty Name="seance_id" ColumnName="seance_id" />
+          <ScalarProperty Name="a_payer" ColumnName="a_payer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="seance">
+      <EntityTypeMapping TypeName="SportAssoModel.seance">
+        <MappingFragment StoreEntitySet="seance">
+          <ScalarProperty Name="seance_id" ColumnName="seance_id" />
+          <ScalarProperty Name="encadrant_id" ColumnName="encadrant_id" />
+          <ScalarProperty Name="lieu_id" ColumnName="lieu_id" />
+          <ScalarProperty Name="section_id" ColumnName="section_id" />
+          <ScalarProperty Name="places_max" ColumnName="places_max" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="section">
+      <EntityTypeMapping TypeName="SportAssoModel.section">
+        <MappingFragment StoreEntitySet="section">
+          <ScalarProperty Name="section_id" ColumnName="section_id" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="discipline_id" ColumnName="discipline_id" />
+          <ScalarProperty Name="label" ColumnName="label" />
+          <ScalarProperty Name="prix" ColumnName="prix" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="utilisateur">
+      <EntityTypeMapping TypeName="SportAssoModel.utilisateur">
+        <MappingFragment StoreEntitySet="utilisateur">
+          <ScalarProperty Name="utilisateur_id" ColumnName="utilisateur_id" />
+          <ScalarProperty Name="login" ColumnName="login" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="prenom" ColumnName="prenom" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="type_user" ColumnName="type_user" />
+          <ScalarProperty Name="adresse" ColumnName="adresse" />
+          <ScalarProperty Name="telephone" ColumnName="telephone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="responsable" TypeName="SportAssoModel.responsable" StoreEntitySet="responsable">
+      <EndProperty Name="section">
+        <ScalarProperty Name="section_id" ColumnName="section_id" />
+      </EndProperty>
+      <EndProperty Name="utilisateur">
+        <ScalarProperty Name="utilisateur_id" ColumnName="utilisateur_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

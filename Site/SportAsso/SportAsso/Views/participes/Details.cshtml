@@ -1,0 +1,42 @@
+﻿@model SportAsso.participe
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>participe</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.a_payer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.a_payer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.seance.seance_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.seance.seance_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.utilisateur.login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.utilisateur.login)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

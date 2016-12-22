@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SportAsso.document>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.type_document)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.path_document)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.utilisateur.login)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.type_document)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.path_document)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.utilisateur.login)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.document_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.document_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.document_id })
+        </td>
+    </tr>
+}
+
+</table>

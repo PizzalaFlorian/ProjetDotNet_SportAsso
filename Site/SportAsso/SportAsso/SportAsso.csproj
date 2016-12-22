@@ -80,6 +80,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -195,19 +197,76 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BddSportAsso.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BddSportAsso.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BddSportAsso.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BddSportAsso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BddSportAsso.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BddSportAsso.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\creneauxController.cs" />
+    <Compile Include="Controllers\disciplinesController.cs" />
+    <Compile Include="Controllers\documentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\lieuxController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\participesController.cs" />
+    <Compile Include="Controllers\seancesController.cs" />
+    <Compile Include="Controllers\sectionsController.cs" />
+    <Compile Include="Controllers\utilisateursController.cs" />
+    <Compile Include="creneau.cs">
+      <DependentUpon>BddSportAsso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="discipline.cs">
+      <DependentUpon>BddSportAsso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="document.cs">
+      <DependentUpon>BddSportAsso.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="lieu.cs">
+      <DependentUpon>BddSportAsso.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="participe.cs">
+      <DependentUpon>BddSportAsso.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="seance.cs">
+      <DependentUpon>BddSportAsso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="section.cs">
+      <DependentUpon>BddSportAsso.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="utilisateur.cs">
+      <DependentUpon>BddSportAsso.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BddSportAsso.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BddSportAsso.edmx</DependentUpon>
+      <LastGenOutput>BddSportAsso.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="BddSportAsso.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BddSportAsso.edmx</DependentUpon>
+      <LastGenOutput>BddSportAsso.cs</LastGenOutput>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -218,6 +277,13 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="BddSportAsso.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BddSportAsso.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="BddSportAsso.edmx.diagram">
+      <DependentUpon>BddSportAsso.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -265,9 +331,50 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\utilisateurs\Create.cshtml" />
+    <Content Include="Views\utilisateurs\Delete.cshtml" />
+    <Content Include="Views\utilisateurs\Details.cshtml" />
+    <Content Include="Views\utilisateurs\Edit.cshtml" />
+    <Content Include="Views\utilisateurs\Index.cshtml" />
+    <Content Include="Views\disciplines\Create.cshtml" />
+    <Content Include="Views\disciplines\Delete.cshtml" />
+    <Content Include="Views\disciplines\Details.cshtml" />
+    <Content Include="Views\disciplines\Edit.cshtml" />
+    <Content Include="Views\disciplines\Index.cshtml" />
+    <Content Include="Views\seances\Create.cshtml" />
+    <Content Include="Views\seances\Delete.cshtml" />
+    <Content Include="Views\seances\Details.cshtml" />
+    <Content Include="Views\seances\Edit.cshtml" />
+    <Content Include="Views\seances\Index.cshtml" />
+    <Content Include="Views\documents\Create.cshtml" />
+    <Content Include="Views\documents\Delete.cshtml" />
+    <Content Include="Views\documents\Details.cshtml" />
+    <Content Include="Views\documents\Edit.cshtml" />
+    <Content Include="Views\documents\Index.cshtml" />
+    <Content Include="Views\sections\Create.cshtml" />
+    <Content Include="Views\sections\Delete.cshtml" />
+    <Content Include="Views\sections\Details.cshtml" />
+    <Content Include="Views\sections\Edit.cshtml" />
+    <Content Include="Views\sections\Index.cshtml" />
+    <Content Include="Views\lieux\Create.cshtml" />
+    <Content Include="Views\lieux\Delete.cshtml" />
+    <Content Include="Views\lieux\Details.cshtml" />
+    <Content Include="Views\lieux\Edit.cshtml" />
+    <Content Include="Views\lieux\Index.cshtml" />
+    <Content Include="Views\creneaux\Create.cshtml" />
+    <Content Include="Views\creneaux\Delete.cshtml" />
+    <Content Include="Views\creneaux\Details.cshtml" />
+    <Content Include="Views\creneaux\Edit.cshtml" />
+    <Content Include="Views\creneaux\Index.cshtml" />
+    <Content Include="Views\participes\Create.cshtml" />
+    <Content Include="Views\participes\Delete.cshtml" />
+    <Content Include="Views\participes\Details.cshtml" />
+    <Content Include="Views\participes\Edit.cshtml" />
+    <Content Include="Views\participes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\utilisateur\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -276,6 +383,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
