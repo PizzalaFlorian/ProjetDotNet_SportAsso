@@ -28,5 +28,18 @@ namespace SportAsso.Controllers
 
             return View();
         }
+
+        public ActionResult disciplineInfo( int id)
+        {
+            String res = null;
+            foreach(discipline d in db.discipline)
+            {
+                if(d.discipline_id == id)
+                {
+                    res = d.description;
+                }
+            }
+            return View(res);
+        }
     }
 }
