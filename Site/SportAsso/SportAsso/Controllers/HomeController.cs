@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,9 +10,27 @@ namespace SportAsso.Controllers
     public class HomeController : Controller      
     {
         private SportAssoEntities db = new SportAssoEntities();
-        public ActionResult Index()
+       
+        public static string titreSection { set; get; }
+        public static string descriptionSection { set; get; }
+
+        public ActionResult Index(int? id)
         {
             var discipline = db.discipline;
+            ViewData["titreSection"] = "test";
+            ViewData["descriptionSection"] = "tesssst";
+            if (id.HasValue == false || id == 0)
+            {
+                ViewData["titreSection"] = "Découvrez les plaisirs du sport chez Sports Asso !";
+                ViewData["descriptionSection"] = "Des dizaines de disciplines exaltantes dispnnibles. Encadré par des proffessionels du sport, venez découvrir les nombreuses activité propossé par nontre association !";
+            }
+            else
+            {
+                discipline d = discipline.Find(id);
+                ViewData["titreSection"] = d.label;
+                ViewData["descriptionSection"] = d.description;
+            }
+            
             return View(discipline.ToList());
         }
 
