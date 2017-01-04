@@ -79,34 +79,17 @@ namespace SportAsso.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            // Ceci ne comptabilise pas les échecs de connexion pour le verrouillage du compte
-            // Pour que les échecs de mot de passe déclenchent le verrouillage du compte, utilisez shouldLockout: true
-            /*var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Tentative de connexion non valide.");
-                    return View(model);
-            }*/
-
             if (new MyUserManager().IsValid(model.Email, model.Password))
             {
                 string role = findRoleByLogin(model.Email);
-                if(role == "false")
+                if (role == "false")
                 {
                     ModelState.AddModelError("", "invalid username or password");
                     return View();
@@ -116,11 +99,7 @@ namespace SportAsso.Controllers
                           // adding following 2 claim just for supporting default antiforgery provider
                           new Claim(ClaimTypes.NameIdentifier, model.Email),
                           new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", "ASP.NET Identity", "http://www.w3.org/2001/XMLSchema#string"),
-
                           new Claim(ClaimTypes.Name,model.Email),
-
-                          // optionally you could add roles if any
-                          
                           new Claim(ClaimTypes.Role, role),
                   },
                   DefaultAuthenticationTypes.ApplicationCookie);
@@ -129,10 +108,10 @@ namespace SportAsso.Controllers
                    new AuthenticationProperties { IsPersistent = false }, ident);
                 //return RedirectToAction("Home"); // auth succeed 
                 return Redirect("../Home/index");
-                }
+            }
 
 
-             // invalid username or password
+            // invalid username or password
             ModelState.AddModelError("", "invalid username or password");
             return View();
         }
@@ -199,14 +178,30 @@ namespace SportAsso.Controllers
             return View();
         }
 
+
+        public bool ModelIsValid (RegisterViewModel model)
+        {
+            foreach(utilisateur u in db.utilisateur)            
+            {
+                if(u.login == model.Email)
+                {
+                    return false;
+                }
+            }
+            if(model.Password == null || model.Prenom == null || model.Nom == null )
+            {
+                return false;
+            }
+            return true;
+        }
         //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+           /* if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -223,10 +218,38 @@ namespace SportAsso.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
+            }*/
+
+            //Register Perso
+            if (ModelIsValid(model))
+            {
+                utilisateur newUser = AffectNewUserFromModel(model);
+                db.utilisateur.Add(newUser);
+                if (db.SaveChanges() == 1)
+                {
+                    LoginViewModel lvm = new LoginViewModel();
+                    lvm.Email = model.Email;
+                    lvm.Password = model.Password;
+                    Login(lvm, "Home/index");
+                    return Redirect("../Home/index");
+                }
             }
 
             // Si nous sommes arrivés là, un échec s’est produit. Réafficher le formulaire
             return View(model);
+        }
+
+        private utilisateur AffectNewUserFromModel(RegisterViewModel model)
+        {
+            utilisateur u = new utilisateur();
+            u.login = model.Email;
+            u.password = model.Password;
+            u.prenom = model.Prenom.ToString();
+            u.nom = model.Nom;
+            u.type_user = "adherent";
+            u.adresse = model.Adresse;
+            u.telephone = model.Telephone;
+            return u;
         }
 
         //
@@ -449,7 +472,7 @@ namespace SportAsso.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

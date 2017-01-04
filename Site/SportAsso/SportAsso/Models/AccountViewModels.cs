@@ -79,6 +79,25 @@ namespace SportAsso.Models
         [Display(Name = "Confirmer le mot de passe ")]
         [Compare("Password", ErrorMessage = "Le mot de passe et le mot de passe de confirmation ne correspondent pas.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [StringLength(100, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 2)]
+        [Display(Name = "Prénom ")]
+        public string Prenom { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [StringLength(100, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 2)]
+        [Display(Name = "Nom ")]
+        public string Nom { get; set; }
+
+        [Display(Name = "Adresse ")]
+        public string Adresse { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Téléphone ")]
+        public string Telephone { get; set; }
     }
 
     public class ResetPasswordViewModel
