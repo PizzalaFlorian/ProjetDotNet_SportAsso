@@ -20,6 +20,17 @@ namespace SportAsso.Controllers
 
         private SportAssoEntities db = new SportAssoEntities();
 
+        class MyUserManager
+        {
+            private SportAssoEntities db = new SportAssoEntities();
+            public bool IsValid(string username, string password)
+            {
+                    // if your users set name is Users
+                    return db.utilisateur.Any(u => u.login == username
+                        && u.password == password);
+            }
+        }
+
         public AccountController()
         {
         }
@@ -77,7 +88,7 @@ namespace SportAsso.Controllers
 
             // Ceci ne comptabilise pas les échecs de connexion pour le verrouillage du compte
             // Pour que les échecs de mot de passe déclenchent le verrouillage du compte, utilisez shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            /*var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -90,12 +101,56 @@ namespace SportAsso.Controllers
                 default:
                     ModelState.AddModelError("", "Tentative de connexion non valide.");
                     return View(model);
-            }
+            }*/
+
+            if (new MyUserManager().IsValid(model.Email, model.Password))
+            {
+                string role = findRoleByLogin(model.Email);
+                if(role == "false")
+                {
+                    ModelState.AddModelError("", "invalid username or password");
+                    return View();
+                }
+                var ident = new ClaimsIdentity(
+                  new[] { 
+                          // adding following 2 claim just for supporting default antiforgery provider
+                          new Claim(ClaimTypes.NameIdentifier, model.Email),
+                          new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", "ASP.NET Identity", "http://www.w3.org/2001/XMLSchema#string"),
+
+                          new Claim(ClaimTypes.Name,model.Email),
+
+                          // optionally you could add roles if any
+                          
+                          new Claim(ClaimTypes.Role, role),
+                  },
+                  DefaultAuthenticationTypes.ApplicationCookie);
+
+                HttpContext.GetOwinContext().Authentication.SignIn(
+                   new AuthenticationProperties { IsPersistent = false }, ident);
+                //return RedirectToAction("Home"); // auth succeed 
+                return Redirect("../Home/index");
+                }
+
+
+             // invalid username or password
+            ModelState.AddModelError("", "invalid username or password");
+            return View();
         }
 
-        //
-        // GET: /Account/VerifyCode
-        [AllowAnonymous]
+        private string findRoleByLogin(string email)
+        {
+            foreach(utilisateur u in db.utilisateur)
+            {
+                if(u.login == email)
+                {
+                    return u.type_user;
+                }
+            }
+            return "false";
+        }
+    //
+    // GET: /Account/VerifyCode
+    [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
             // Nécessiter que l'utilisateur soit déjà connecté via un nom d'utilisateur/mot de passe ou une connexte externe
