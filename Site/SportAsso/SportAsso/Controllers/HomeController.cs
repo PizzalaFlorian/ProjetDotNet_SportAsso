@@ -16,6 +16,11 @@ namespace SportAsso.Controllers
 
         public ActionResult Index(int? id)
         {
+            if (NeedToSwithByRole())
+            {
+                return SwitchHomeByModelRole();
+            }
+           
             var discipline = db.discipline;
             ViewData["titreSection"] = "test";
             ViewData["descriptionSection"] = "tesssst";
@@ -32,6 +37,39 @@ namespace SportAsso.Controllers
             }
             
             return View(discipline.ToList());
+        }
+
+        private bool NeedToSwithByRole()
+        {
+            if (User.IsInRole("encadrant"))
+            {
+                return true;
+            }
+            if (User.IsInRole("administrateur"))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private ActionResult SwitchHomeByModelRole()
+        {
+            if (User.IsInRole("encadrant"))
+            {
+                return Redirect("/Home/Encadrant");
+            }
+            if (User.IsInRole("administrateur"))
+            {
+                return Redirect("/Home/Admin");
+            }
+            return Redirect("/Home/Index");
+        }
+
+        [Authorize(Roles ="encadrant")]
+        public ActionResult Encadrant()
+        {
+            ViewBag.Message = "Acceuil Encadrant";
+            return View();
         }
 
         public ActionResult About()

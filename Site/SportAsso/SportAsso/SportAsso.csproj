@@ -400,6 +400,7 @@
     <Content Include="Views\participes\Details.cshtml" />
     <Content Include="Views\participes\Edit.cshtml" />
     <Content Include="Views\participes\Index.cshtml" />
+    <Content Include="Views\Home\Encadrant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
