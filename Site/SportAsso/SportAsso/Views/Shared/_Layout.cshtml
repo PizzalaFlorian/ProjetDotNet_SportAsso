@@ -26,9 +26,31 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Disciplines", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Calendrier", "calendrier", "participe")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("Utilisateurs", "Index", "utilisateurs")</li>
+                        <li>@Html.ActionLink("Disciplines", "Index", "disciplines")</li>
+                        <li>@Html.ActionLink("Affectations", "Affectation", "utilisateurs")</li>
+                        <li>@Html.ActionLink("Dossiers", "Index", "documents")</li>
+                        <li>@Html.ActionLink("Paiments", "Paiments", "participations")</li>
+                        <li>@Html.ActionLink("Calendrier", "calendrier", "participe")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    }
+                    else {
+                        if (User.IsInRole("encadrant"))
+                        {
+                            <li>@Html.ActionLink("Disciplines", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Calendrier", "calendrier", "participe")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Disciplines", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Calendrier", "calendrier", "participe")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        }
+                    }
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

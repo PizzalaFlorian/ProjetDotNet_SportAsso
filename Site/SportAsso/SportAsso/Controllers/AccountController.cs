@@ -77,9 +77,9 @@ namespace SportAsso.Controllers
 
         private string RedirectToHomeByRole(string role)
         {
-            if(role == "administrateur")
+            if(role == "admin")
             {
-                return "../Home/Admin";
+                return "../utilisateurs/Index";
             }
             if (role == "encadrant")
             {
@@ -130,7 +130,7 @@ namespace SportAsso.Controllers
             return View(utilisateur);
         }
 
-        //
+        
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]

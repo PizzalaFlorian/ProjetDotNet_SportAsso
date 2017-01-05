@@ -14,13 +14,17 @@ namespace SportAsso.Controllers
     {
         private SportAssoEntities db = new SportAssoEntities();
 
+
         // GET: utilisateurs
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             return View(db.utilisateur.ToList());
         }
 
+
         // GET: utilisateurs/Details/5
+        [Authorize(Roles = "admin")]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -36,6 +40,7 @@ namespace SportAsso.Controllers
         }
 
         // GET: utilisateurs/Create
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +49,7 @@ namespace SportAsso.Controllers
         // POST: utilisateurs/Create
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "utilisateur_id,login,password,prenom,nom,type_user,adresse,telephone")] utilisateur utilisateur)
@@ -59,6 +65,7 @@ namespace SportAsso.Controllers
         }
 
         // GET: utilisateurs/Edit/5
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -76,6 +83,7 @@ namespace SportAsso.Controllers
         // POST: utilisateurs/Edit/5
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "utilisateur_id,login,password,prenom,nom,type_user,adresse,telephone")] utilisateur utilisateur)
@@ -90,6 +98,7 @@ namespace SportAsso.Controllers
         }
 
         // GET: utilisateurs/Delete/5
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -105,6 +114,7 @@ namespace SportAsso.Controllers
         }
 
         // POST: utilisateurs/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
@@ -114,6 +124,7 @@ namespace SportAsso.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {

@@ -45,7 +45,7 @@ namespace SportAsso.Controllers
             {
                 return true;
             }
-            if (User.IsInRole("administrateur"))
+            if (User.IsInRole("admin"))
             {
                 return true;
             }
@@ -58,9 +58,9 @@ namespace SportAsso.Controllers
             {
                 return Redirect("/Home/Encadrant");
             }
-            if (User.IsInRole("administrateur"))
+            if (User.IsInRole("admin"))
             {
-                return Redirect("/Home/Admin");
+                return Redirect("/utilisateurs/index");
             }
             return Redirect("/Home/Index");
         }
@@ -72,7 +72,7 @@ namespace SportAsso.Controllers
             return View();
         }
 
-        [Authorize(Roles = "encadrant")]
+        [Authorize(Roles = "admin")]
         public ActionResult Admin()
         {
             ViewBag.Message = "Accueil Administrateur";

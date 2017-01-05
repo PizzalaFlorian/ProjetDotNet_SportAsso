@@ -403,6 +403,7 @@
     <Content Include="Views\Home\Encadrant.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Account\Compte.cshtml" />
+    <Content Include="Views\Shared\MenuAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
