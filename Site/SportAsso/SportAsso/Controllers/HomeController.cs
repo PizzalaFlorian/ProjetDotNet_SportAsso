@@ -72,6 +72,12 @@ namespace SportAsso.Controllers
             return View();
         }
 
+        [Authorize(Roles = "encadrant")]
+        public ActionResult Admin()
+        {
+            ViewBag.Message = "Accueil Administrateur";
+            return View();
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SportAsso.Models;
+using System.Data.Entity;
 
 namespace SportAsso.Controllers
 {
@@ -85,6 +86,40 @@ namespace SportAsso.Controllers
                 return "../Home/Encadrant";
             }
             return "../Home/index";
+        }
+
+        public utilisateur FindUserByName (string name)
+        {
+            utilisateur res = new utilisateur();
+            foreach(utilisateur u in db.utilisateur)
+            {
+                if(u.login == name)
+                {
+                    res = u;
+                }
+            }
+            return res;
+        }
+
+        [Authorize]
+        public ActionResult Compte()
+        {
+            ViewBag.Message = "Mon compte";
+            utilisateur utilisateur = FindUserByName(User.Identity.GetUserName());
+            return View(utilisateur);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Compte([Bind(Include = "utilisateur_id,login,password,prenom,nom,adresse,telephone")] utilisateur utilisateur)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(utilisateur).State = EntityState.Modified;
+                db.SaveChanges();
+                return Redirect("../Home/Index");
+            }
+            return View(utilisateur);
         }
 
         //
