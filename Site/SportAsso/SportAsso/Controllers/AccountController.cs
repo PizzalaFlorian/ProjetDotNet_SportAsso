@@ -111,13 +111,21 @@ namespace SportAsso.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Compte([Bind(Include = "utilisateur_id,login,password,prenom,nom,adresse,telephone")] utilisateur utilisateur)
+        public ActionResult Compte([Bind(Include = "utilisateur_id,login,password,prenom,nom,type_user,adresse,telephone")] utilisateur utilisateur)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(utilisateur).State = EntityState.Modified;
-                db.SaveChanges();
-                return Redirect("../Home/Index");
+                try
+                {
+                    db.Entry(utilisateur).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Redirect("../Home/Index");
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Echec de la modification");
+                    return View(utilisateur);
+                }
             }
             return View(utilisateur);
         }
