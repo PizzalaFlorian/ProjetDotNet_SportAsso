@@ -24,6 +24,17 @@ namespace SportAsso.Controllers
             return "empty";
         }
 
+        public static string FindUserFullNameById(long? id)
+        {
+            if (id.HasValue)
+            {
+                SportAssoEntities db = new SportAssoEntities();
+                utilisateur u = db.utilisateur.Find(id);
+                return u.prenom + ' ' + u.nom;
+            }
+            return "non affecté";
+        }
+
         // GET: sections
         [Authorize(Roles = "encadrant , admin")]
         public ActionResult Index(long? id)
@@ -98,6 +109,7 @@ namespace SportAsso.Controllers
                 return HttpNotFound();
             }
             ViewBag.discipline_id = new SelectList(db.discipline, "discipline_id", "label", section.discipline_id);
+            ViewBag.responsable_id = new SelectList(db.utilisateur, "utilisateur_id", "login", section.responsable_id);
             return View(section);
         }
 

@@ -20,6 +20,9 @@
         <th>
             @Html.DisplayNameFor(model => model.discipline.label)
         </th>
+        <th>
+            <bold>responsable</bold>
+        </th>
         <th></th>
     </tr>
 
@@ -37,6 +40,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.discipline.label)
+        </td>
+        <td>
+            @SportAsso.Controllers.sectionsController.FindUserFullNameById(item.responsable_id)
         </td>
         <td>
             @Html.ActionLink("Modifier la section", "Edit", "sections", new { id = item.section_id }, new { @class = "btn btn - default" })
