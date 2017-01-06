@@ -46,14 +46,6 @@
     <Property Name="seance_id" Type="bigint" Nullable="false" />
     <Property Name="a_payer" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="responsable">
-    <Key>
-      <PropertyRef Name="utilisateur_id" />
-      <PropertyRef Name="section_id" />
-    </Key>
-    <Property Name="utilisateur_id" Type="bigint" Nullable="false" />
-    <Property Name="section_id" Type="bigint" Nullable="false" />
-  </EntityType>
   <EntityType Name="seance">
     <Key>
       <PropertyRef Name="seance_id" />
@@ -73,6 +65,7 @@
     <Property Name="discipline_id" Type="bigint" Nullable="false" />
     <Property Name="label" Type="varchar" MaxLength="256" Nullable="false" />
     <Property Name="prix" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="utilisateur_id" Type="bigint" />
   </EntityType>
   <EntityType Name="utilisateur">
     <Key>
@@ -159,18 +152,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="section_responsable_fk">
-    <End Role="section" Type="Self.section" Multiplicity="1" />
-    <End Role="responsable" Type="Self.responsable" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="section">
-        <PropertyRef Name="section_id" />
-      </Principal>
-      <Dependent Role="responsable">
-        <PropertyRef Name="section_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="user_discipline_fk">
     <End Role="utilisateur" Type="Self.utilisateur" Multiplicity="1" />
     <End Role="discipline" Type="Self.discipline" Multiplicity="*" />
@@ -195,18 +176,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="user_responsable_fk">
-    <End Role="utilisateur" Type="Self.utilisateur" Multiplicity="1" />
-    <End Role="responsable" Type="Self.responsable" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="utilisateur">
-        <PropertyRef Name="utilisateur_id" />
-      </Principal>
-      <Dependent Role="responsable">
-        <PropertyRef Name="utilisateur_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="user_seance_fk">
     <End Role="utilisateur" Type="Self.utilisateur" Multiplicity="1" />
     <End Role="seance" Type="Self.seance" Multiplicity="*" />
@@ -225,7 +194,6 @@
     <EntitySet Name="document" EntityType="Self.document" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="lieu" EntityType="Self.lieu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="participe" EntityType="Self.participe" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="responsable" EntityType="Self.responsable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="seance" EntityType="Self.seance" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="section" EntityType="Self.section" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="utilisateur" EntityType="Self.utilisateur" Schema="dbo" store:Type="Tables" />
@@ -253,10 +221,6 @@
       <End Role="section" EntitySet="section" />
       <End Role="seance" EntitySet="seance" />
     </AssociationSet>
-    <AssociationSet Name="section_responsable_fk" Association="Self.section_responsable_fk">
-      <End Role="section" EntitySet="section" />
-      <End Role="responsable" EntitySet="responsable" />
-    </AssociationSet>
     <AssociationSet Name="user_discipline_fk" Association="Self.user_discipline_fk">
       <End Role="utilisateur" EntitySet="utilisateur" />
       <End Role="discipline" EntitySet="discipline" />
@@ -264,10 +228,6 @@
     <AssociationSet Name="user_participe_fk" Association="Self.user_participe_fk">
       <End Role="utilisateur" EntitySet="utilisateur" />
       <End Role="participe" EntitySet="participe" />
-    </AssociationSet>
-    <AssociationSet Name="user_responsable_fk" Association="Self.user_responsable_fk">
-      <End Role="utilisateur" EntitySet="utilisateur" />
-      <End Role="responsable" EntitySet="responsable" />
     </AssociationSet>
     <AssociationSet Name="user_seance_fk" Association="Self.user_seance_fk">
       <End Role="utilisateur" EntitySet="utilisateur" />

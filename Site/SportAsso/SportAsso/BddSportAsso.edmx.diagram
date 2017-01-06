@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="70cd4c16c467459ab6dd9fed02456125" Name="Diagram1">
         <EntityTypeShape EntityType="SportAssoModel.creneau" Width="1.5" PointX="9.75" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SportAssoModel.discipline" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportAssoModel.discipline" Width="1.5" PointX="2.875" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SportAssoModel.document" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SportAssoModel.lieu" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SportAssoModel.participe" Width="1.5" PointX="9.75" PointY="7" IsExpanded="true" />
@@ -22,7 +22,7 @@
         <AssociationConnector Association="SportAssoModel.user_participe_fk" ManuallyRouted="false" />
         <AssociationConnector Association="SportAssoModel.section_creneau_fk" ManuallyRouted="false" />
         <AssociationConnector Association="SportAssoModel.user_seance_fk" ManuallyRouted="false" />
-        <AssociationConnector Association="SportAssoModel.responsable" ManuallyRouted="false" />
+        <AssociationConnector Association="SportAssoModel.respo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

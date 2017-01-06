@@ -79,7 +79,8 @@
     <Property Name="prix" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="discipline" Relationship="Self.discipline_section_fk" FromRole="section" ToRole="discipline" />
     <NavigationProperty Name="seance" Relationship="Self.section_creneau_fk" FromRole="section" ToRole="seance" />
-    <NavigationProperty Name="utilisateur" Relationship="Self.responsable" FromRole="section" ToRole="utilisateur" />
+    <NavigationProperty Name="utilisateur" Relationship="SportAssoModel.respo" FromRole="section" ToRole="utilisateur" />
+    <Property Name="responsable_id" Type="Int64" Nullable="false" />
   </EntityType>
   <EntityType Name="utilisateur">
     <Key>
@@ -97,7 +98,7 @@
     <NavigationProperty Name="document" Relationship="Self.adherent_document_fk" FromRole="utilisateur" ToRole="document" />
     <NavigationProperty Name="participe" Relationship="Self.user_participe_fk" FromRole="utilisateur" ToRole="participe" />
     <NavigationProperty Name="seance" Relationship="Self.user_seance_fk" FromRole="utilisateur" ToRole="seance" />
-    <NavigationProperty Name="section" Relationship="Self.responsable" FromRole="utilisateur" ToRole="section" />
+    <NavigationProperty Name="section" Relationship="SportAssoModel.respo" FromRole="utilisateur" ToRole="section" />
   </EntityType>
   <Association Name="seance_creneau_fk">
     <End Role="seance" Type="Self.seance" Multiplicity="1" />
@@ -207,10 +208,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="responsable">
-    <End Role="section" Type="Self.section" Multiplicity="*" />
-    <End Role="utilisateur" Type="Self.utilisateur" Multiplicity="*" />
-  </Association>
   <EntityContainer Name="SportAssoEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="creneau" EntityType="Self.creneau" />
     <EntitySet Name="discipline" EntityType="Self.discipline" />
@@ -256,9 +253,21 @@
       <End Role="utilisateur" EntitySet="utilisateur" />
       <End Role="seance" EntitySet="seance" />
     </AssociationSet>
-    <AssociationSet Name="responsable" Association="Self.responsable">
-      <End Role="section" EntitySet="section" />
+    <AssociationSet Name="respo" Association="SportAssoModel.respo">
       <End Role="utilisateur" EntitySet="utilisateur" />
+      <End Role="section" EntitySet="section" />
     </AssociationSet>
   </EntityContainer>
+  <Association Name="respo">
+    <End Type="SportAssoModel.utilisateur" Role="utilisateur" Multiplicity="1" />
+    <End Type="SportAssoModel.section" Role="section" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="utilisateur">
+        <PropertyRef Name="utilisateur_id" />
+      </Principal>
+      <Dependent Role="section">
+        <PropertyRef Name="responsable_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

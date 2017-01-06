@@ -62,17 +62,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="section">
-      <EntityTypeMapping TypeName="SportAssoModel.section">
-        <MappingFragment StoreEntitySet="section">
-          <ScalarProperty Name="section_id" ColumnName="section_id" />
-          <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="discipline_id" ColumnName="discipline_id" />
-          <ScalarProperty Name="label" ColumnName="label" />
-          <ScalarProperty Name="prix" ColumnName="prix" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="utilisateur">
       <EntityTypeMapping TypeName="SportAssoModel.utilisateur">
         <MappingFragment StoreEntitySet="utilisateur">
@@ -87,13 +76,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="responsable" TypeName="SportAssoModel.responsable" StoreEntitySet="responsable">
-      <EndProperty Name="section">
-        <ScalarProperty Name="section_id" ColumnName="section_id" />
-      </EndProperty>
-      <EndProperty Name="utilisateur">
-        <ScalarProperty Name="utilisateur_id" ColumnName="utilisateur_id" />
-      </EndProperty>
-    </AssociationSetMapping>
+    <EntitySetMapping Name="section">
+      <EntityTypeMapping TypeName="IsTypeOf(SportAssoModel.section)">
+        <MappingFragment StoreEntitySet="section">
+          <ScalarProperty Name="responsable_id" ColumnName="utilisateur_id" />
+          <ScalarProperty Name="prix" ColumnName="prix" />
+          <ScalarProperty Name="label" ColumnName="label" />
+          <ScalarProperty Name="discipline_id" ColumnName="discipline_id" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="section_id" ColumnName="section_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

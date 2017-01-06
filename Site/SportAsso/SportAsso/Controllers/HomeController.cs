@@ -23,7 +23,7 @@ namespace SportAsso.Controllers
            
             var discipline = db.discipline;
             ViewData["titreSection"] = "test";
-            ViewData["descriptionSection"] = "tesssst";
+            ViewData["descriptionSection"] = "test";
             if (id.HasValue == false || id == 0)
             {
                 ViewData["titreSection"] = "Découvrez les plaisirs du sport chez Sports Asso !";
