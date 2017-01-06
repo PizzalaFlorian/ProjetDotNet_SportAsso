@@ -14,14 +14,35 @@ namespace SportAsso.Controllers
     {
         private SportAssoEntities db = new SportAssoEntities();
 
+        public static string FindDisciplineNameById(long? id)
+        {
+            if (id.HasValue)
+            {
+                SportAssoEntities db = new SportAssoEntities();
+                return db.discipline.Find(id).label;
+            }
+            return "empty";
+        }
+
         // GET: sections
-        public ActionResult Index()
+        [Authorize(Roles = "encadrant , admin")]
+        public ActionResult Index(long? id)
         {
             var section = db.section.Include(s => s.discipline);
+            ViewData["title"] = "Liste des sections";
+            if (id.HasValue)
+            {
+                ViewData["title"] = "Liste des sections de la discipline " + FindDisciplineNameById(id);
+                section = from b in db.section.Include(s => s.discipline)
+                where b.discipline_id == id
+                select b;
+            }
             return View(section.ToList());
         }
 
+
         // GET: sections/Details/5
+        [Authorize(Roles = "encadrant , admin")]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -37,6 +58,7 @@ namespace SportAsso.Controllers
         }
 
         // GET: sections/Create
+        [Authorize(Roles = "encadrant , admin")]
         public ActionResult Create()
         {
             ViewBag.discipline_id = new SelectList(db.discipline, "discipline_id", "label");
@@ -46,6 +68,7 @@ namespace SportAsso.Controllers
         // POST: sections/Create
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "encadrant , admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "section_id,description,discipline_id,label,prix")] section section)
@@ -62,6 +85,7 @@ namespace SportAsso.Controllers
         }
 
         // GET: sections/Edit/5
+        [Authorize(Roles = "encadrant , admin")]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -80,6 +104,7 @@ namespace SportAsso.Controllers
         // POST: sections/Edit/5
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "encadrant , admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "section_id,description,discipline_id,label,prix")] section section)
@@ -95,6 +120,7 @@ namespace SportAsso.Controllers
         }
 
         // GET: sections/Delete/5
+        [Authorize(Roles = "encadrant , admin")]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -110,6 +136,7 @@ namespace SportAsso.Controllers
         }
 
         // POST: sections/Delete/5
+        [Authorize(Roles = "encadrant , admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)

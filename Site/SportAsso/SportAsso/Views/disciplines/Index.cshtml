@@ -18,7 +18,7 @@
             @Html.DisplayNameFor(model => model.description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.utilisateur.login)
+           <bold> Nom Responsable</bold>
         </th>
         <th></th>
     </tr>
@@ -32,13 +32,16 @@
             @Html.DisplayFor(modelItem => item.description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.utilisateur.login)
+            @SportAsso.Controllers.disciplinesController.GetUserFullNameByLogin(item.utilisateur.login)
         </td>
         <td>
-            @Html.ActionLink("Modifier", "Edit", "disciplines", new { id = item.discipline_id }, new { @class = "btn btn - default" }) 
+            @Html.ActionLink("Voir les sections", "Index", "sections", new { id = item.discipline_id }, new { @class = "btn btn - default" })
+            <br />
+            <br />
+            @Html.ActionLink("Modifier la discipline", "Edit", "disciplines", new { id = item.discipline_id }, new { @class = "btn btn - default" }) 
             <br/>
             <br/>
-            @Html.ActionLink("Supprimer", "Delete", "disciplines", new { id = item.discipline_id }, new { @class = "btn btn - default" })
+            @Html.ActionLink("Supprimer la discipline", "Delete", "disciplines", new { id = item.discipline_id }, new { @class = "btn btn - default" })
         </td>
     </tr>
 }

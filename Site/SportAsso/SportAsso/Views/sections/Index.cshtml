@@ -1,22 +1,19 @@
 ﻿@model IEnumerable<SportAsso.section>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
+<h4 class="center">@ViewData["title"]</h4>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Ajouter une section", "Create", "sections", null, new { @class = "btn btn - default" })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.description)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.label)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        
         <th>
             @Html.DisplayNameFor(model => model.prix)
         </th>
@@ -28,11 +25,12 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.label)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.prix)
@@ -41,9 +39,10 @@
             @Html.DisplayFor(modelItem => item.discipline.label)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.section_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.section_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.section_id })
+            @Html.ActionLink("Modifier la section", "Edit", "sections", new { id = item.section_id }, new { @class = "btn btn - default" })
+            <br/>
+            <br/>  
+            @Html.ActionLink("Supprimer la section", "Delete", "sections", new { id = item.section_id }, new { @class = "btn btn - default" })
         </td>
     </tr>
 }
