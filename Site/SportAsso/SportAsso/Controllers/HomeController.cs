@@ -10,7 +10,9 @@ namespace SportAsso.Controllers
     public class HomeController : Controller      
     {
         private SportAssoEntities db = new SportAssoEntities();
-       
+
+        public static List<section> list { set; get; }
+
         public static string titreSection { set; get; }
         public static string descriptionSection { set; get; }
 
@@ -28,8 +30,10 @@ namespace SportAsso.Controllers
             {
                 ViewData["titreSection"] = "Découvrez les plaisirs du sport chez Sports Asso !";
                 ViewData["descriptionSection"] = "Des dizaines de disciplines exaltantes dispnnibles. Encadré par des proffessionels du sport, venez découvrir les nombreuses activité propossé par nontre association !";
+
+                IQueryable<SportAsso.section> q = from d in db.section where d.discipline_id == id select d;
+                list = q.ToList<section>();
                 
-                ViewBag.sections = from b in db.section where b.discipline_id == id select b;
             }
             else
             {
