@@ -70,7 +70,7 @@
           <Property Name="discipline_id" Type="bigint" Nullable="false" />
           <Property Name="label" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="prix" Type="varchar" MaxLength="256" Nullable="false" />
-          <Property Name="utilisateur_id" Type="bigint" />
+          <Property Name="responsable_id" Type="bigint" />
         </EntityType>
         <EntityType Name="utilisateur">
           <Key>
@@ -323,7 +323,7 @@
           <NavigationProperty Name="discipline" Relationship="Self.discipline_section_fk" FromRole="section" ToRole="discipline" />
           <NavigationProperty Name="seance" Relationship="Self.section_creneau_fk" FromRole="section" ToRole="seance" />
           <NavigationProperty Name="utilisateur" Relationship="SportAssoModel.respo" FromRole="section" ToRole="utilisateur" />
-          <Property Name="responsable_id" Type="Int64" Nullable="false" />
+          <Property Name="responsable_id" Type="Int64" />
         </EntityType>
         <EntityType Name="utilisateur">
           <Key>
@@ -502,7 +502,7 @@
           </AssociationSet>
         </EntityContainer>
         <Association Name="respo">
-          <End Type="SportAssoModel.utilisateur" Role="utilisateur" Multiplicity="1" />
+          <End Type="SportAssoModel.utilisateur" Role="utilisateur" Multiplicity="0..1" />
           <End Type="SportAssoModel.section" Role="section" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="utilisateur">
@@ -597,7 +597,7 @@
           <EntitySetMapping Name="section">
             <EntityTypeMapping TypeName="IsTypeOf(SportAssoModel.section)">
               <MappingFragment StoreEntitySet="section">
-                <ScalarProperty Name="responsable_id" ColumnName="utilisateur_id" />
+                <ScalarProperty Name="responsable_id" ColumnName="responsable_id" />
                 <ScalarProperty Name="prix" ColumnName="prix" />
                 <ScalarProperty Name="label" ColumnName="label" />
                 <ScalarProperty Name="discipline_id" ColumnName="discipline_id" />

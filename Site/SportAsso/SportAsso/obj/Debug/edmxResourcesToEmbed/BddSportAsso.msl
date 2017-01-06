@@ -79,7 +79,7 @@
     <EntitySetMapping Name="section">
       <EntityTypeMapping TypeName="IsTypeOf(SportAssoModel.section)">
         <MappingFragment StoreEntitySet="section">
-          <ScalarProperty Name="responsable_id" ColumnName="utilisateur_id" />
+          <ScalarProperty Name="responsable_id" ColumnName="responsable_id" />
           <ScalarProperty Name="prix" ColumnName="prix" />
           <ScalarProperty Name="label" ColumnName="label" />
           <ScalarProperty Name="discipline_id" ColumnName="discipline_id" />

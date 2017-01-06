@@ -65,7 +65,7 @@
     <Property Name="discipline_id" Type="bigint" Nullable="false" />
     <Property Name="label" Type="varchar" MaxLength="256" Nullable="false" />
     <Property Name="prix" Type="varchar" MaxLength="256" Nullable="false" />
-    <Property Name="utilisateur_id" Type="bigint" />
+    <Property Name="responsable_id" Type="bigint" />
   </EntityType>
   <EntityType Name="utilisateur">
     <Key>

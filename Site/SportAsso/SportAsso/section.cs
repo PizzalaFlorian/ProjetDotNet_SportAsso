@@ -25,7 +25,7 @@ namespace SportAsso
         public long discipline_id { get; set; }
         public string label { get; set; }
         public string prix { get; set; }
-        public long responsable_id { get; set; }
+        public Nullable<long> responsable_id { get; set; }
     
         public virtual discipline discipline { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

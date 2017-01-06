@@ -80,7 +80,7 @@
     <NavigationProperty Name="discipline" Relationship="Self.discipline_section_fk" FromRole="section" ToRole="discipline" />
     <NavigationProperty Name="seance" Relationship="Self.section_creneau_fk" FromRole="section" ToRole="seance" />
     <NavigationProperty Name="utilisateur" Relationship="SportAssoModel.respo" FromRole="section" ToRole="utilisateur" />
-    <Property Name="responsable_id" Type="Int64" Nullable="false" />
+    <Property Name="responsable_id" Type="Int64" />
   </EntityType>
   <EntityType Name="utilisateur">
     <Key>
@@ -259,7 +259,7 @@
     </AssociationSet>
   </EntityContainer>
   <Association Name="respo">
-    <End Type="SportAssoModel.utilisateur" Role="utilisateur" Multiplicity="1" />
+    <End Type="SportAssoModel.utilisateur" Role="utilisateur" Multiplicity="0..1" />
     <End Type="SportAssoModel.section" Role="section" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="utilisateur">
