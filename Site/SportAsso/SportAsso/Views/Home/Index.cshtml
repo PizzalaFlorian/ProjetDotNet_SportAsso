@@ -19,6 +19,31 @@
         
         <div class="panel-body">
             @ViewData["descriptionSection"]
-        </div>
+            <hr />
+            @foreach (var item in ViewBag.sections.toList())
+            {
+                <table class="table">
+                    <tr>
+                        <td>
+                            @item.label
+                        </td>
+                        <td>
+                            @item.description
+                        </td>
+                        <td>
+                            @item.prix
+                        </td>
+                        <td>
+                            @item.discipline.label
+                        </td>
+                        <td>
+                            @SportAsso.Controllers.sectionsController.FindUserFullNameById(item.responsable_id)
+                        </td>
+                     </tr>
+                </table>
+                }
+</div>
+
+
     </div>
 </div>

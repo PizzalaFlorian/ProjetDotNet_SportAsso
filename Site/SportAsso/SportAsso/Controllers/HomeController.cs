@@ -28,6 +28,8 @@ namespace SportAsso.Controllers
             {
                 ViewData["titreSection"] = "Découvrez les plaisirs du sport chez Sports Asso !";
                 ViewData["descriptionSection"] = "Des dizaines de disciplines exaltantes dispnnibles. Encadré par des proffessionels du sport, venez découvrir les nombreuses activité propossé par nontre association !";
+                
+                ViewBag.sections = from b in db.section where b.discipline_id == id select b;
             }
             else
             {
