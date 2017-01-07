@@ -1,17 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="SportAssoModelStoreContainer" CdmEntityContainer="SportAssoEntities">
-    <EntitySetMapping Name="creneau">
-      <EntityTypeMapping TypeName="SportAssoModel.creneau">
-        <MappingFragment StoreEntitySet="creneau">
-          <ScalarProperty Name="creneau_id" ColumnName="creneau_id" />
-          <ScalarProperty Name="seance_id" ColumnName="seance_id" />
-          <ScalarProperty Name="heure_debut" ColumnName="heure_debut" />
-          <ScalarProperty Name="heure_fin" ColumnName="heure_fin" />
-          <ScalarProperty Name="jour_de_la_semaine" ColumnName="jour_de_la_semaine" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="discipline">
       <EntityTypeMapping TypeName="SportAssoModel.discipline">
         <MappingFragment StoreEntitySet="discipline">
@@ -55,6 +44,9 @@
     <EntitySetMapping Name="seance">
       <EntityTypeMapping TypeName="SportAssoModel.seance">
         <MappingFragment StoreEntitySet="seance">
+          <ScalarProperty Name="jour_de_la_semaine" ColumnName="jour_de_la_semaine" />
+          <ScalarProperty Name="heure_fin" ColumnName="heure_fin" />
+          <ScalarProperty Name="heure_debut" ColumnName="heure_debut" />
           <ScalarProperty Name="seance_id" ColumnName="seance_id" />
           <ScalarProperty Name="encadrant_id" ColumnName="encadrant_id" />
           <ScalarProperty Name="lieu_id" ColumnName="lieu_id" />

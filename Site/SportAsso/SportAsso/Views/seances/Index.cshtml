@@ -15,6 +15,15 @@
             @Html.DisplayNameFor(model => model.places_max)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.heure_debut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.heure_fin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jour_de_la_semaine)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.lieu.label)
         </th>
         <th>
@@ -30,6 +39,15 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.places_max)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.heure_debut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.heure_fin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.jour_de_la_semaine)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.lieu.label)

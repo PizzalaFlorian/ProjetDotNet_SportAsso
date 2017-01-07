@@ -50,7 +50,7 @@ namespace SportAsso.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "seance_id,encadrant_id,lieu_id,section_id,places_max")] seance seance)
+        public ActionResult Create([Bind(Include = "seance_id,encadrant_id,lieu_id,section_id,places_max,heure_debut,heure_fin,jour_de_la_semaine")] seance seance)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace SportAsso.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "seance_id,encadrant_id,lieu_id,section_id,places_max")] seance seance)
+        public ActionResult Edit([Bind(Include = "seance_id,encadrant_id,lieu_id,section_id,places_max,heure_debut,heure_fin,jour_de_la_semaine")] seance seance)
         {
             if (ModelState.IsValid)
             {
