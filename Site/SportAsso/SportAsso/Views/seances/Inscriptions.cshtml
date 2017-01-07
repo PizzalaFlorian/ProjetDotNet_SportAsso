@@ -4,7 +4,7 @@
     ViewBag.Title = "Inscriptions";
 }
 
-<h2>Inscriptions</h2>
+<h4 class="center">@ViewData["title"]</h4>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -59,9 +59,7 @@
             @Html.DisplayFor(modelItem => item.utilisateur.login)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.seance_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.seance_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.seance_id })
+            @Html.ActionLink("S'inscrire", "Inscription", "participes", new { id = item.section_id }, new { @class = "btn btn - default" })
         </td>
     </tr>
 }

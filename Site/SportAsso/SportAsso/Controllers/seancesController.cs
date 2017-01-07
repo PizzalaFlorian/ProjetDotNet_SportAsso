@@ -21,8 +21,21 @@ namespace SportAsso.Controllers
             return View(seance.ToList());
         }
 
+        public static string GetNameSectionByID(long id)
+        {
+            SportAssoEntities db = new SportAssoEntities();
+            return db.section.Find(id).label;
+        }
+
+        public static string GetNameDisciplineBySeanceID(long id)
+        {
+            SportAssoEntities db = new SportAssoEntities();
+            long dis_id = db.section.Find(id).discipline_id;
+            return db.discipline.Find(dis_id).label;
+        }
         public ActionResult Inscriptions(long id)
         {
+            ViewData["title"] = "Liste des séance de la section " + GetNameSectionByID(id) + " de la discipline " + GetNameDisciplineBySeanceID(id);
             var seance = from b in db.seance.Include(s => s.lieu).Include(s => s.section).Include(s => s.utilisateur)
                          where b.seance_id == id
                          select b;
