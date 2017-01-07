@@ -6,8 +6,8 @@
     </Key>
     <Property Name="creneau_id" Type="Int64" Nullable="false" />
     <Property Name="seance_id" Type="Int64" Nullable="false" />
-    <Property Name="heure_debut" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="heure_fin" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="heure_debut" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="heure_fin" Type="Time" Nullable="false" Precision="7" />
     <Property Name="jour_de_la_semaine" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="seance" Relationship="Self.seance_creneau_fk" FromRole="creneau" ToRole="seance" />
   </EntityType>

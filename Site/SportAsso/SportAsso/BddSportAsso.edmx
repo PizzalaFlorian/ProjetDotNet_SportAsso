@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SportAssoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="creneau">
-          <Key>
-            <PropertyRef Name="creneau_id" />
-          </Key>
-          <Property Name="creneau_id" Type="bigint" Nullable="false" />
-          <Property Name="seance_id" Type="bigint" Nullable="false" />
-          <Property Name="heure_debut" Type="datetime" Nullable="false" />
-          <Property Name="heure_fin" Type="datetime" Nullable="false" />
-          <Property Name="jour_de_la_semaine" Type="varchar" MaxLength="10" Nullable="false" />
-        </EntityType>
         <EntityType Name="discipline">
           <Key>
             <PropertyRef Name="discipline_id" />
@@ -60,6 +50,9 @@
           <Property Name="encadrant_id" Type="bigint" Nullable="false" />
           <Property Name="lieu_id" Type="bigint" Nullable="false" />
           <Property Name="section_id" Type="bigint" Nullable="false" />
+          <Property Name="heure_debut" Type="time" Precision="7" Nullable="false" />
+          <Property Name="heure_fin" Type="time" Precision="7" Nullable="false" />
+          <Property Name="jour_de_la_semaine" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="places_max" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="section">
@@ -134,18 +127,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="seance_creneau_fk">
-          <End Role="seance" Type="Self.seance" Multiplicity="1" />
-          <End Role="creneau" Type="Self.creneau" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="seance">
-              <PropertyRef Name="seance_id" />
-            </Principal>
-            <Dependent Role="creneau">
-              <PropertyRef Name="seance_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="section_creneau_fk">
           <End Role="section" Type="Self.section" Multiplicity="1" />
           <End Role="seance" Type="Self.seance" Multiplicity="*" />
@@ -195,7 +176,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SportAssoModelStoreContainer">
-          <EntitySet Name="creneau" EntityType="Self.creneau" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="discipline" EntityType="Self.discipline" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="document" EntityType="Self.document" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lieu" EntityType="Self.lieu" Schema="dbo" store:Type="Tables" />
@@ -219,10 +199,6 @@
             <End Role="lieu" EntitySet="lieu" />
             <End Role="seance" EntitySet="seance" />
           </AssociationSet>
-          <AssociationSet Name="seance_creneau_fk" Association="Self.seance_creneau_fk">
-            <End Role="seance" EntitySet="seance" />
-            <End Role="creneau" EntitySet="creneau" />
-          </AssociationSet>
           <AssociationSet Name="section_creneau_fk" Association="Self.section_creneau_fk">
             <End Role="section" EntitySet="section" />
             <End Role="seance" EntitySet="seance" />
@@ -244,17 +220,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SportAssoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="creneau">
-          <Key>
-            <PropertyRef Name="creneau_id" />
-          </Key>
-          <Property Name="creneau_id" Type="Int64" Nullable="false" />
-          <Property Name="seance_id" Type="Int64" Nullable="false" />
-          <Property Name="heure_debut" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="heure_fin" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="jour_de_la_semaine" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="seance" Relationship="Self.seance_creneau_fk" FromRole="creneau" ToRole="seance" />
-        </EntityType>
         <EntityType Name="discipline">
           <Key>
             <PropertyRef Name="discipline_id" />
@@ -307,11 +272,13 @@
           <Property Name="lieu_id" Type="Int64" Nullable="false" />
           <Property Name="section_id" Type="Int64" Nullable="false" />
           <Property Name="places_max" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="creneau" Relationship="Self.seance_creneau_fk" FromRole="seance" ToRole="creneau" />
           <NavigationProperty Name="lieu" Relationship="Self.lieu_creneau_fk" FromRole="seance" ToRole="lieu" />
           <NavigationProperty Name="participe" Relationship="Self.creneau_participe_fk" FromRole="seance" ToRole="participe" />
           <NavigationProperty Name="section" Relationship="Self.section_creneau_fk" FromRole="seance" ToRole="section" />
           <NavigationProperty Name="utilisateur" Relationship="Self.user_seance_fk" FromRole="seance" ToRole="utilisateur" />
+          <Property Name="heure_debut" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="heure_fin" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="jour_de_la_semaine" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="section">
           <Key>
@@ -345,18 +312,6 @@
           <NavigationProperty Name="seance" Relationship="Self.user_seance_fk" FromRole="utilisateur" ToRole="seance" />
           <NavigationProperty Name="section" Relationship="SportAssoModel.respo" FromRole="utilisateur" ToRole="section" />
         </EntityType>
-        <Association Name="seance_creneau_fk">
-          <End Role="seance" Type="Self.seance" Multiplicity="1" />
-          <End Role="creneau" Type="Self.creneau" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="seance">
-              <PropertyRef Name="seance_id" />
-            </Principal>
-            <Dependent Role="creneau">
-              <PropertyRef Name="seance_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="discipline_section_fk">
           <End Role="discipline" Type="Self.discipline" Multiplicity="1" >
           </End>
@@ -459,7 +414,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SportAssoEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="creneau" EntityType="Self.creneau" />
           <EntitySet Name="discipline" EntityType="Self.discipline" />
           <EntitySet Name="document" EntityType="Self.document" />
           <EntitySet Name="lieu" EntityType="Self.lieu" />
@@ -467,10 +421,6 @@
           <EntitySet Name="seance" EntityType="Self.seance" />
           <EntitySet Name="section" EntityType="Self.section" />
           <EntitySet Name="utilisateur" EntityType="Self.utilisateur" />
-          <AssociationSet Name="seance_creneau_fk" Association="Self.seance_creneau_fk">
-            <End Role="seance" EntitySet="seance" />
-            <End Role="creneau" EntitySet="creneau" />
-          </AssociationSet>
           <AssociationSet Name="discipline_section_fk" Association="Self.discipline_section_fk">
             <End Role="discipline" EntitySet="discipline" />
             <End Role="section" EntitySet="section" />
@@ -526,17 +476,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SportAssoModelStoreContainer" CdmEntityContainer="SportAssoEntities">
-          <EntitySetMapping Name="creneau">
-            <EntityTypeMapping TypeName="SportAssoModel.creneau">
-              <MappingFragment StoreEntitySet="creneau">
-                <ScalarProperty Name="creneau_id" ColumnName="creneau_id" />
-                <ScalarProperty Name="seance_id" ColumnName="seance_id" />
-                <ScalarProperty Name="heure_debut" ColumnName="heure_debut" />
-                <ScalarProperty Name="heure_fin" ColumnName="heure_fin" />
-                <ScalarProperty Name="jour_de_la_semaine" ColumnName="jour_de_la_semaine" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="discipline">
             <EntityTypeMapping TypeName="SportAssoModel.discipline">
               <MappingFragment StoreEntitySet="discipline">
@@ -580,6 +519,9 @@
           <EntitySetMapping Name="seance">
             <EntityTypeMapping TypeName="SportAssoModel.seance">
               <MappingFragment StoreEntitySet="seance">
+                <ScalarProperty Name="jour_de_la_semaine" ColumnName="jour_de_la_semaine" />
+                <ScalarProperty Name="heure_fin" ColumnName="heure_fin" />
+                <ScalarProperty Name="heure_debut" ColumnName="heure_debut" />
                 <ScalarProperty Name="seance_id" ColumnName="seance_id" />
                 <ScalarProperty Name="encadrant_id" ColumnName="encadrant_id" />
                 <ScalarProperty Name="lieu_id" ColumnName="lieu_id" />

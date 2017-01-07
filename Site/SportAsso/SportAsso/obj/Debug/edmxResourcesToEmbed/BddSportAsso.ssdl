@@ -6,8 +6,8 @@
     </Key>
     <Property Name="creneau_id" Type="bigint" Nullable="false" />
     <Property Name="seance_id" Type="bigint" Nullable="false" />
-    <Property Name="heure_debut" Type="datetime" Nullable="false" />
-    <Property Name="heure_fin" Type="datetime" Nullable="false" />
+    <Property Name="heure_debut" Type="time" Precision="7" Nullable="false" />
+    <Property Name="heure_fin" Type="time" Precision="7" Nullable="false" />
     <Property Name="jour_de_la_semaine" Type="varchar" MaxLength="10" Nullable="false" />
   </EntityType>
   <EntityType Name="discipline">

@@ -17,7 +17,6 @@ namespace SportAsso
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public seance()
         {
-            this.creneau = new HashSet<creneau>();
             this.participe = new HashSet<participe>();
         }
     
@@ -26,9 +25,10 @@ namespace SportAsso
         public long lieu_id { get; set; }
         public long section_id { get; set; }
         public int places_max { get; set; }
+        public System.TimeSpan heure_debut { get; set; }
+        public System.TimeSpan heure_fin { get; set; }
+        public string jour_de_la_semaine { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<creneau> creneau { get; set; }
         public virtual lieu lieu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<participe> participe { get; set; }

@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="70cd4c16c467459ab6dd9fed02456125" Name="Diagram1">
-        <EntityTypeShape EntityType="SportAssoModel.creneau" Width="1.5" PointX="9.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SportAssoModel.discipline" Width="1.5" PointX="2.875" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SportAssoModel.document" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SportAssoModel.lieu" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
@@ -13,7 +12,6 @@
         <EntityTypeShape EntityType="SportAssoModel.seance" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SportAssoModel.section" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SportAssoModel.utilisateur" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
-        <AssociationConnector Association="SportAssoModel.seance_creneau_fk" ManuallyRouted="false" />
         <AssociationConnector Association="SportAssoModel.discipline_section_fk" ManuallyRouted="false" />
         <AssociationConnector Association="SportAssoModel.user_discipline_fk" ManuallyRouted="false" />
         <AssociationConnector Association="SportAssoModel.adherent_document_fk" ManuallyRouted="false" />

@@ -25,7 +25,6 @@ namespace SportAsso
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<creneau> creneau { get; set; }
         public virtual DbSet<discipline> discipline { get; set; }
         public virtual DbSet<document> document { get; set; }
         public virtual DbSet<lieu> lieu { get; set; }

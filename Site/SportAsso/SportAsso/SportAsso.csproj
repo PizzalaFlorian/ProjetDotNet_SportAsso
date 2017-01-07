@@ -213,7 +213,6 @@
       <DependentUpon>BddSportAsso.edmx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\creneauxController.cs" />
     <Compile Include="Controllers\disciplinesController.cs" />
     <Compile Include="Controllers\documentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -223,9 +222,6 @@
     <Compile Include="Controllers\seancesController.cs" />
     <Compile Include="Controllers\sectionsController.cs" />
     <Compile Include="Controllers\utilisateursController.cs" />
-    <Compile Include="creneau.cs">
-      <DependentUpon>BddSportAsso.tt</DependentUpon>
-    </Compile>
     <Compile Include="discipline.cs">
       <DependentUpon>BddSportAsso.tt</DependentUpon>
     </Compile>
@@ -370,11 +366,6 @@
     <Content Include="Views\disciplines\Details.cshtml" />
     <Content Include="Views\disciplines\Edit.cshtml" />
     <Content Include="Views\disciplines\Index.cshtml" />
-    <Content Include="Views\seances\Create.cshtml" />
-    <Content Include="Views\seances\Delete.cshtml" />
-    <Content Include="Views\seances\Details.cshtml" />
-    <Content Include="Views\seances\Edit.cshtml" />
-    <Content Include="Views\seances\Index.cshtml" />
     <Content Include="Views\sections\Create.cshtml" />
     <Content Include="Views\sections\Delete.cshtml" />
     <Content Include="Views\sections\Details.cshtml" />
@@ -385,11 +376,6 @@
     <Content Include="Views\lieux\Details.cshtml" />
     <Content Include="Views\lieux\Edit.cshtml" />
     <Content Include="Views\lieux\Index.cshtml" />
-    <Content Include="Views\creneaux\Create.cshtml" />
-    <Content Include="Views\creneaux\Delete.cshtml" />
-    <Content Include="Views\creneaux\Details.cshtml" />
-    <Content Include="Views\creneaux\Edit.cshtml" />
-    <Content Include="Views\creneaux\Index.cshtml" />
     <Content Include="Views\participes\Create.cshtml" />
     <Content Include="Views\participes\Delete.cshtml" />
     <Content Include="Views\participes\Details.cshtml" />
@@ -404,6 +390,13 @@
     <Content Include="Views\documents\Details.cshtml" />
     <Content Include="Views\documents\Edit.cshtml" />
     <Content Include="Views\documents\Index.cshtml" />
+    <Content Include="Views\participes\Inscritpion.cshtml" />
+    <Content Include="Views\participes\MesInscritions.cshtml" />
+    <Content Include="Views\seances\Create.cshtml" />
+    <Content Include="Views\seances\Delete.cshtml" />
+    <Content Include="Views\seances\Details.cshtml" />
+    <Content Include="Views\seances\Edit.cshtml" />
+    <Content Include="Views\seances\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

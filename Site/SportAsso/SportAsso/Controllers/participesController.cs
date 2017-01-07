@@ -15,13 +15,22 @@ namespace SportAsso.Controllers
         private SportAssoEntities db = new SportAssoEntities();
 
         // GET: participes
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             var participe = db.participe.Include(p => p.seance).Include(p => p.utilisateur);
             return View(participe.ToList());
         }
 
+        [Authorize]
+        public ActionResult MesInscritions()
+        {
+            var participe = db.participe.Include(p => p.seance).Include(p => p.utilisateur);
+            return View(participe.ToList());
+        }
+
         // GET: participes/Details/5
+        [Authorize(Roles = "admin")]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -37,6 +46,7 @@ namespace SportAsso.Controllers
         }
 
         // GET: participes/Create
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             ViewBag.seance_id = new SelectList(db.seance, "seance_id", "seance_id");
@@ -47,6 +57,7 @@ namespace SportAsso.Controllers
         // POST: participes/Create
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "utilisateur_id,seance_id,a_payer")] participe participe)
@@ -63,7 +74,36 @@ namespace SportAsso.Controllers
             return View(participe);
         }
 
+        [Authorize]
+        public ActionResult Inscription(long id)
+        {
+            ViewBag.seance_id = new SelectList(db.seance, "seance_id", "seance_id");
+            ViewBag.utilisateur_id = new SelectList(db.utilisateur, "utilisateur_id", "login");
+            return View();
+        }
+
+        // POST: participes/Create
+        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
+        // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Inscritpion([Bind(Include = "utilisateur_id,seance_id,a_payer")] participe participe)
+        {
+            if (ModelState.IsValid)
+            {
+                db.participe.Add(participe);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.seance_id = new SelectList(db.seance, "seance_id", "seance_id", participe.seance_id);
+            ViewBag.utilisateur_id = new SelectList(db.utilisateur, "utilisateur_id", "login", participe.utilisateur_id);
+            return View(participe);
+        }
+
         // GET: participes/Edit/5
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -83,6 +123,7 @@ namespace SportAsso.Controllers
         // POST: participes/Edit/5
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "utilisateur_id,seance_id,a_payer")] participe participe)
@@ -99,6 +140,7 @@ namespace SportAsso.Controllers
         }
 
         // GET: participes/Delete/5
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -114,6 +156,7 @@ namespace SportAsso.Controllers
         }
 
         // POST: participes/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
