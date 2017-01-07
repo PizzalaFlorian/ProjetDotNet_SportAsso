@@ -25,6 +25,7 @@
     <EntitySetMapping Name="document">
       <EntityTypeMapping TypeName="SportAssoModel.document">
         <MappingFragment StoreEntitySet="document">
+          <ScalarProperty Name="valide" ColumnName="valide" />
           <ScalarProperty Name="document_id" ColumnName="document_id" />
           <ScalarProperty Name="utilisateur_id" ColumnName="utilisateur_id" />
           <ScalarProperty Name="type_document" ColumnName="type_document" />

@@ -27,6 +27,7 @@
     <Property Name="utilisateur_id" Type="bigint" Nullable="false" />
     <Property Name="type_document" Type="varchar" MaxLength="256" Nullable="false" />
     <Property Name="path_document" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="valide" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="lieu">
     <Key>

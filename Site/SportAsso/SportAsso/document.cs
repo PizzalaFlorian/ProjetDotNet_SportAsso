@@ -18,6 +18,7 @@ namespace SportAsso
         public long utilisateur_id { get; set; }
         public string type_document { get; set; }
         public string path_document { get; set; }
+        public short valide { get; set; }
     
         public virtual utilisateur utilisateur { get; set; }
     }

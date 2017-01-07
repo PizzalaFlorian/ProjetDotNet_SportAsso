@@ -31,6 +31,7 @@
     <Property Name="type_document" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="path_document" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="utilisateur" Relationship="Self.adherent_document_fk" FromRole="document" ToRole="utilisateur" />
+    <Property Name="valide" Type="Int16" Nullable="false" />
   </EntityType>
   <EntityType Name="lieu">
     <Key>

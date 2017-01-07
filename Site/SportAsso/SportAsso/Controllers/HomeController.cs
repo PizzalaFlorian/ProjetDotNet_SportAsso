@@ -10,12 +10,7 @@ namespace SportAsso.Controllers
     public class HomeController : Controller      
     {
         private SportAssoEntities db = new SportAssoEntities();
-
-        public static List<section> list { set; get; }
-
-        public static string titreSection { set; get; }
-        public static string descriptionSection { set; get; }
-
+        
         public ActionResult Index(int? id)
         {
             if (NeedToSwithByRole())

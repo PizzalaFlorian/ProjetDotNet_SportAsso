@@ -15,35 +15,49 @@
     </div>
     <div class="panel panel-body pad5 w80">
         <div class="panel-heading">@ViewData["titreSection"]</div>
-     
-        
         <div class="panel-body">
             @ViewData["descriptionSection"]
-            <hr />
-            @foreach (var item in @ViewBag.list)
-            {
+                <hr />
                 <table class="table">
                     <tr>
-                        <td>
-                            @item.label
-                        </td>
-                        <td>
-                            @item.description
-                        </td>
-                        <td>
-                            @item.prix
-                        </td>
-                        <td>
-                            @item.discipline.label
-                        </td>
-                        <td>
-                            @SportAsso.Controllers.sectionsController.FindUserFullNameById(item.responsable_id)
-                        </td>
-                     </tr>
-                </table>
-                }
-</div>
+                        <th>
+                            <bold>Section</bold>
+                        </th>
+                        <th>
+                            <bold>Description</bold>
+                        </th>
+                        <th>
+                            <bold>Prix</bold>
+                        </th>
+                        <th>
+                            <bold>Responsable</bold>
+                        </th>
+                        <th>
+                            <bold>Inscription</bold>
+                        </th>
+                    </tr>
 
-
+                    @foreach (var item in @ViewBag.list)
+                {
+                        <tr>
+                            <td>
+                                @item.label
+                            </td>
+                            <td>
+                                @item.description
+                            </td>
+                            <td>
+                                @item.prix
+                            </td>
+                            <td>
+                                @SportAsso.Controllers.sectionsController.FindUserFullNameById(item.responsable_id)
+                            </td>
+                            <td>
+                                @Html.ActionLink("S'inscrire", "Inscription", "participes", new { id = item.section_id }, new { @class = "btn btn - default" })
+                            </td>
+                        </tr>
+                    }
+                </table>         
+        </div>
     </div>
 </div>

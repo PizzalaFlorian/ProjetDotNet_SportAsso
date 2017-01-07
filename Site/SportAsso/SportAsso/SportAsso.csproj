@@ -375,11 +375,6 @@
     <Content Include="Views\seances\Details.cshtml" />
     <Content Include="Views\seances\Edit.cshtml" />
     <Content Include="Views\seances\Index.cshtml" />
-    <Content Include="Views\documents\Create.cshtml" />
-    <Content Include="Views\documents\Delete.cshtml" />
-    <Content Include="Views\documents\Details.cshtml" />
-    <Content Include="Views\documents\Edit.cshtml" />
-    <Content Include="Views\documents\Index.cshtml" />
     <Content Include="Views\sections\Create.cshtml" />
     <Content Include="Views\sections\Delete.cshtml" />
     <Content Include="Views\sections\Details.cshtml" />
@@ -404,6 +399,11 @@
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Account\Compte.cshtml" />
     <Content Include="Views\Shared\MenuAdmin.cshtml" />
+    <Content Include="Views\documents\Create.cshtml" />
+    <Content Include="Views\documents\Delete.cshtml" />
+    <Content Include="Views\documents\Details.cshtml" />
+    <Content Include="Views\documents\Edit.cshtml" />
+    <Content Include="Views\documents\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -32,6 +32,7 @@
           <Property Name="utilisateur_id" Type="bigint" Nullable="false" />
           <Property Name="type_document" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="path_document" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="valide" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="lieu">
           <Key>
@@ -274,6 +275,7 @@
           <Property Name="type_document" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="path_document" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="utilisateur" Relationship="Self.adherent_document_fk" FromRole="document" ToRole="utilisateur" />
+          <Property Name="valide" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="lieu">
           <Key>
@@ -356,7 +358,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="discipline_section_fk">
-          <End Role="discipline" Type="Self.discipline" Multiplicity="1" />
+          <End Role="discipline" Type="Self.discipline" Multiplicity="1" >
+          </End>
           <End Role="section" Type="Self.section" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="discipline">
@@ -380,7 +383,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="adherent_document_fk">
-          <End Role="utilisateur" Type="Self.utilisateur" Multiplicity="1" />
+          <End Role="utilisateur" Type="Self.utilisateur" Multiplicity="1" >
+          </End>
           <End Role="document" Type="Self.document" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="utilisateur">
@@ -404,8 +408,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="creneau_participe_fk">
-          <End Role="seance" Type="Self.seance" Multiplicity="1" />
-          <End Role="participe" Type="Self.participe" Multiplicity="*" />
+          <End Role="seance" Type="Self.seance" Multiplicity="1" >
+          </End>
+          <End Role="participe" Type="Self.participe" Multiplicity="*" >
+          </End>
           <ReferentialConstraint>
             <Principal Role="seance">
               <PropertyRef Name="seance_id" />
@@ -428,7 +434,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="section_creneau_fk">
-          <End Role="section" Type="Self.section" Multiplicity="1" />
+          <End Role="section" Type="Self.section" Multiplicity="1" >
+          </End>
           <End Role="seance" Type="Self.seance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="section">
@@ -543,6 +550,7 @@
           <EntitySetMapping Name="document">
             <EntityTypeMapping TypeName="SportAssoModel.document">
               <MappingFragment StoreEntitySet="document">
+                <ScalarProperty Name="valide" ColumnName="valide" />
                 <ScalarProperty Name="document_id" ColumnName="document_id" />
                 <ScalarProperty Name="utilisateur_id" ColumnName="utilisateur_id" />
                 <ScalarProperty Name="type_document" ColumnName="type_document" />
