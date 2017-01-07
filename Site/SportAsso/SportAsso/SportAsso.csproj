@@ -397,6 +397,7 @@
     <Content Include="Views\seances\Details.cshtml" />
     <Content Include="Views\seances\Edit.cshtml" />
     <Content Include="Views\seances\Index.cshtml" />
+    <Content Include="Views\seances\Inscriptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

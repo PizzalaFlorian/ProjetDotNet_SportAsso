@@ -21,6 +21,14 @@ namespace SportAsso.Controllers
             return View(seance.ToList());
         }
 
+        public ActionResult Inscriptions(long id)
+        {
+            var seance = from b in db.seance.Include(s => s.lieu).Include(s => s.section).Include(s => s.utilisateur)
+                         where b.seance_id == id
+                         select b;
+            return View(seance.ToList());
+        }
+
         // GET: seances/Details/5
         public ActionResult Details(long? id)
         {

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<SportAsso.seance>
+
+@{
+    ViewBag.Title = "Inscriptions";
+}
+
+<h2>Inscriptions</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.places_max)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.heure_debut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.heure_fin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jour_de_la_semaine)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lieu.label)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.section.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.utilisateur.login)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.places_max)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.heure_debut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.heure_fin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.jour_de_la_semaine)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lieu.label)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.section.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.utilisateur.login)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.seance_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.seance_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.seance_id })
+        </td>
+    </tr>
+}
+
+</table>

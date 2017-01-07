@@ -53,7 +53,7 @@
                                 @SportAsso.Controllers.sectionsController.FindUserFullNameById(item.responsable_id)
                             </td>
                             <td>
-                                @Html.ActionLink("Voir les séances disponnibles", "index", "seances", new { id = item.section_id }, new { @class = "btn btn - default" })
+                                @Html.ActionLink("Voir les séances disponnibles", "Inscriptions", "seances", new { id = item.section_id }, new { @class = "btn btn - default" })
                             </td>
                         </tr>
                     }
