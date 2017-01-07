@@ -20,7 +20,7 @@
         <div class="panel-body">
             @ViewData["descriptionSection"]
             <hr />
-            @foreach (var item in SportAsso.Controllers.HomeController.list)
+            @foreach (var item in @ViewBag.list)
             {
                 <table class="table">
                     <tr>

@@ -30,10 +30,6 @@ namespace SportAsso.Controllers
             {
                 ViewData["titreSection"] = "Découvrez les plaisirs du sport chez Sports Asso !";
                 ViewData["descriptionSection"] = "Des dizaines de disciplines exaltantes dispnnibles. Encadré par des proffessionels du sport, venez découvrir les nombreuses activité propossé par nontre association !";
-
-                IQueryable<SportAsso.section> q = from d in db.section where d.discipline_id == id select d;
-                list = q.ToList<section>();
-                
             }
             else
             {
@@ -41,7 +37,9 @@ namespace SportAsso.Controllers
                 ViewData["titreSection"] = d.label;
                 ViewData["descriptionSection"] = d.description;
             }
-            
+            IQueryable<SportAsso.section> q = from d in db.section where d.discipline_id == id select d;
+            ViewBag.list = q.ToList<section>();
+
             return View(discipline.ToList());
         }
 
