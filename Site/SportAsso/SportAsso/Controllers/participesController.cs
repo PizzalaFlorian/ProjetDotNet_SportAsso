@@ -24,8 +24,29 @@ namespace SportAsso.Controllers
             return View(participe.ToList());
         }
 
+        public static string HourFormator(string time)
+        {
+            string[] res = time.Split(':');
+
+            return res[0]+"h"+res[1];
+        }
+
+        public static string GetSeancesInfo(long id)
+        {
+            string res = "";
+            SportAssoEntities db = new SportAssoEntities();
+
+            seance s = db.seance.Find(id);
+            section sec = db.section.Find(s.section_id);
+            discipline d = db.discipline.Find(sec.discipline_id);
+
+            res = d.label + " - " + sec.label + " : " + s.jour_de_la_semaine + " de " + HourFormator(""+s.heure_debut) + " à " + HourFormator(""+s.heure_fin);
+
+            return res;
+        }
+
         [Authorize]
-        public ActionResult MesInscritions()
+        public ActionResult MesInscriptions()
         {
             long id = GetUserIdByLogin(User.Identity.GetUserName());
             var participe = from par in db.participe.Include(p => p.seance).Include(p => p.utilisateur)
@@ -94,7 +115,7 @@ namespace SportAsso.Controllers
         }
 
         [Authorize]
-        public ActionResult Inscritpion(long id)
+        public ActionResult Inscription(long id)
         {
             SportAssoEntities db = new SportAssoEntities();
             ViewBag.seance_id = id;
@@ -114,13 +135,13 @@ namespace SportAsso.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Inscritpion([Bind(Include = "utilisateur_id,seance_id,a_payer")] participe participe)
+        public ActionResult Inscription([Bind(Include = "utilisateur_id,seance_id,a_payer")] participe participe)
         {
             if (ModelState.IsValid)
             {
                 db.participe.Add(participe);
                 db.SaveChanges();
-                return RedirectToAction("MesInscritions");
+                return RedirectToAction("MesInscriptions");
             }
             ViewBag.message = "Erreur";
             ViewBag.seance_id = new SelectList(db.seance, "seance_id", "seance_id", participe.seance_id);

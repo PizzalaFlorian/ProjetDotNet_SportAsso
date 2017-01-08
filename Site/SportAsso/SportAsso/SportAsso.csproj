@@ -390,8 +390,8 @@
     <Content Include="Views\documents\Details.cshtml" />
     <Content Include="Views\documents\Edit.cshtml" />
     <Content Include="Views\documents\Index.cshtml" />
-    <Content Include="Views\participes\Inscritpion.cshtml" />
-    <Content Include="Views\participes\MesInscritions.cshtml" />
+    <Content Include="Views\participes\Inscription.cshtml" />
+    <Content Include="Views\participes\MesInscriptions.cshtml" />
     <Content Include="Views\seances\Create.cshtml" />
     <Content Include="Views\seances\Delete.cshtml" />
     <Content Include="Views\seances\Details.cshtml" />

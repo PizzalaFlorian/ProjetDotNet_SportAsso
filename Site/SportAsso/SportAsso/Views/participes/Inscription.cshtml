@@ -1,0 +1,33 @@
+﻿@model SportAsso.participe
+
+@{
+    ViewBag.Title = "Inscritpion";
+}
+
+<h4 class="center">@ViewData["titre"]</h4>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <br>
+        <hr/>
+        <br>
+        <h5 class="center">@ViewData["texte"]</h5>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+       
+        @Html.HiddenFor(model => model.utilisateur_id, new { Value = @ViewBag.utilisateur_id })
+        @Html.HiddenFor(model => model.seance_id, new { Value = @ViewBag.seance_id })
+        @Html.HiddenFor(model => model.a_payer, new { Value = @ViewBag.a_payer })
+        <br>
+        <hr />
+        <br>
+        <p class="center"><bold> Comfirmer l'inscription et passer au paiment </bold></p>
+        <div class="form-group">
+            <div class="center">
+                <input type="submit" value="Comfirmer" class="btn btn-default" /> | @Html.ActionLink("Annuler", "Index", "Home", null, new { @class = "btn btn - default" })
+            </div>
+        </div>
+    </div>
+}
