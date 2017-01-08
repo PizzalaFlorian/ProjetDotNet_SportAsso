@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SportAsso;
+using Microsoft.AspNet.Identity;
+
 
 namespace SportAsso.Controllers
 {
@@ -25,7 +27,10 @@ namespace SportAsso.Controllers
         [Authorize]
         public ActionResult MesInscritions()
         {
-            var participe = db.participe.Include(p => p.seance).Include(p => p.utilisateur);
+            long id = GetUserIdByLogin(User.Identity.GetUserName());
+            var participe = from par in db.participe.Include(p => p.seance).Include(p => p.utilisateur)
+                            where par.utilisateur_id == id
+                            select par;
             return View(participe.ToList());
         }
 
@@ -75,10 +80,31 @@ namespace SportAsso.Controllers
         }
 
         [Authorize]
-        public ActionResult Inscription(long id)
+        public static long GetUserIdByLogin(string login)
         {
-            ViewBag.seance_id = new SelectList(db.seance, "seance_id", "seance_id");
-            ViewBag.utilisateur_id = new SelectList(db.utilisateur, "utilisateur_id", "login");
+            SportAssoEntities db = new SportAssoEntities();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if(u.login == login)
+                {
+                    return u.utilisateur_id;
+                }
+            }   
+            return 0;
+        }
+
+        [Authorize]
+        public ActionResult Inscritpion(long id)
+        {
+            SportAssoEntities db = new SportAssoEntities();
+            ViewBag.seance_id = id;
+            seance s = db.seance.Find(id);
+            section sec = db.section.Find(s.section_id);
+            discipline d = db.discipline.Find(sec.discipline_id);
+            ViewBag.utilisateur_id = GetUserIdByLogin(User.Identity.GetUserName());
+            ViewBag.a_payer = false;
+            ViewData["titre"] = "Inscription à la section " + sec.label + " de la discipline " + d.label;
+            ViewData["texte"] = "Comfirmez votre inscription à la séance du "+ s.jour_de_la_semaine + " de "+ s.heure_debut + " à "+ s.heure_fin;
             return View();
         }
 
@@ -94,9 +120,9 @@ namespace SportAsso.Controllers
             {
                 db.participe.Add(participe);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("MesInscritions");
             }
-
+            ViewBag.message = "Erreur";
             ViewBag.seance_id = new SelectList(db.seance, "seance_id", "seance_id", participe.seance_id);
             ViewBag.utilisateur_id = new SelectList(db.utilisateur, "utilisateur_id", "login", participe.utilisateur_id);
             return View(participe);
