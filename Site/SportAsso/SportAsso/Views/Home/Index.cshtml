@@ -18,6 +18,7 @@
         <div class="panel-body">
             @ViewData["descriptionSection"]
                 <hr />
+            @if (@ViewBag.detail) { 
                 <table class="table">
                     <tr>
                         <th>
@@ -57,7 +58,8 @@
                             </td>
                         </tr>
                     }
-                </table>         
+                </table> 
+            }        
         </div>
     </div>
 </div>

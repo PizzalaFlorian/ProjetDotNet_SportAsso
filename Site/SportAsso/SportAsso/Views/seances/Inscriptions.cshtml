@@ -6,31 +6,28 @@
 
 <h4 class="center">@ViewData["title"]</h4>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.places_max)
+            <bold> Séance</bold>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.heure_debut)
+            <bold> Jour de la semaine</bold>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.heure_fin)
+            <bold> Heure de début </bold>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.jour_de_la_semaine)
+            <bold> Heure de fin </bold>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.lieu.label)
+            <bold> Lieu </bold>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.section.description)
+            <bold> Places disponnibles </bold>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.utilisateur.login)
+            <bold> Encadrant </bold>
         </th>
         <th></th>
     </tr>
@@ -38,29 +35,39 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.places_max)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.heure_debut)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.heure_fin)
+            @SportAsso.Controllers.sectionsController.FindFullTitleById(item.section_id)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.jour_de_la_semaine)
+        </td>      
+        <td>
+            @SportAsso.Controllers.participesController.HourFormator(""+ item.heure_debut)
+        </td>
+        <td>
+            @SportAsso.Controllers.participesController.HourFormator("" + item.heure_fin)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.lieu.label)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.section.description)
+            @SportAsso.Controllers.seancesController.GetStringNumberOfParticipantByID(item.seance_id) /  @Html.DisplayFor(modelItem => item.places_max)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.utilisateur.login)
+            @SportAsso.Controllers.disciplinesController.GetUserFullNameByLogin(item.utilisateur.login)
         </td>
-        <td>
-            @Html.ActionLink("S'inscrire", "Inscription", "participes", new { id = item.seance_id }, new { @class = "btn btn - default" })
-        </td>
+        @if (!SportAsso.Controllers.seancesController.IsComplet(item.seance_id))
+        {
+            <td>
+                @Html.ActionLink("S'inscrire", "Inscription", "participes", new { id = item.seance_id }, new { @class = "btn btn - default" })
+            </td>
+        }
+        else
+        {
+            <td>
+                Complet
+            </td>
+        }
+
     </tr>
 }
 

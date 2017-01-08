@@ -33,6 +33,44 @@ namespace SportAsso.Controllers
             long dis_id = db.section.Find(id).discipline_id;
             return db.discipline.Find(dis_id).label;
         }
+
+        public static string GetStringNumberOfParticipantByID(long seance_id)
+        {
+            SportAssoEntities db = new SportAssoEntities();
+            var participations = from p in db.participe where p.seance_id == seance_id select p;
+            int cpt = 0;
+            foreach(participe p in participations)
+            {
+                cpt++;
+            }
+            return ""+cpt;
+        }
+
+        public static long GetNumberOfParticipantByID(long seance_id)
+        {
+            SportAssoEntities db = new SportAssoEntities();
+            var participations = from p in db.participe where p.seance_id == seance_id select p;
+            long cpt = 0;
+            foreach (participe p in participations)
+            {
+                cpt++;
+            }
+            return cpt;
+        }
+
+        public static bool IsComplet(long seance_id)
+        {
+            long N_participant = GetNumberOfParticipantByID(seance_id);
+            SportAssoEntities db = new SportAssoEntities();
+            long max = db.seance.Find(seance_id).seance_id;
+
+            if(N_participant < max)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public ActionResult Inscriptions(long id)
         {
             ViewData["title"] = "Liste des séance de la section " + GetNameSectionByID(id) + " de la discipline " + GetNameDisciplineBySeanceID(id);

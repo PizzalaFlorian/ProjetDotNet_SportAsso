@@ -24,6 +24,15 @@ namespace SportAsso.Controllers
             return "empty";
         }
 
+        public static string FindFullTitleById(long section_id)
+        {
+            SportAssoEntities db = new SportAssoEntities();
+            section s = db.section.Find(section_id);
+            discipline d = db.discipline.Find(s.discipline_id);
+
+            return d.label + " - " + s.label;
+        }
+
         public static string FindUserFullNameById(long? id)
         {
             if (id.HasValue)

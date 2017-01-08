@@ -23,11 +23,13 @@ namespace SportAsso.Controllers
             ViewData["descriptionSection"] = "test";
             if (id.HasValue == false || id == 0)
             {
+                ViewBag.detail = false;
                 ViewData["titreSection"] = "Découvrez les plaisirs du sport chez Sports Asso !";
                 ViewData["descriptionSection"] = "Des dizaines de disciplines exaltantes dispnnibles. Encadré par des proffessionels du sport, venez découvrir les nombreuses activité propossé par nontre association !";
             }
             else
             {
+                ViewBag.detail = true;
                 discipline d = discipline.Find(id);
                 ViewData["titreSection"] = d.label;
                 ViewData["descriptionSection"] = d.description;
