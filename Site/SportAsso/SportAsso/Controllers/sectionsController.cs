@@ -44,10 +44,21 @@ namespace SportAsso.Controllers
             return "non affecté";
         }
 
+        [Authorize(Roles = "encadrant , admin")]
+        public ActionResult Redirect()
+        {
+            if (User.IsInRole("encadrant"))
+            {
+                return Redirect("/Home/Encadrant");
+            }
+            return Redirect("/sections/Index");
+        }
+
         // GET: sections
         [Authorize(Roles = "encadrant , admin")]
         public ActionResult Index(long? id)
         {
+            
             var section = db.section.Include(s => s.discipline);
             ViewData["title"] = "Liste des sections";
             if (id.HasValue)
@@ -82,6 +93,16 @@ namespace SportAsso.Controllers
         public ActionResult Create()
         {
             ViewBag.discipline_id = new SelectList(db.discipline, "discipline_id", "label");
+
+            var responsables = new List<SelectListItem>();
+            foreach(utilisateur u in db.utilisateur)
+            {
+                if(u.type_user == "encadrant")
+                {
+                    responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = ""+u.utilisateur_id });
+                }
+            }
+            ViewBag.responsable_id = responsables;
             return View();
         }
 
@@ -91,16 +112,25 @@ namespace SportAsso.Controllers
         [Authorize(Roles = "encadrant , admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "section_id,description,discipline_id,label,prix")] section section)
+        public ActionResult Create([Bind(Include = "section_id,description,discipline_id,label,prix,responsable_id")] section section)
         {
             if (ModelState.IsValid)
             {
                 db.section.Add(section);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Redirect");
             }
 
             ViewBag.discipline_id = new SelectList(db.discipline, "discipline_id", "label", section.discipline_id);
+            var responsables = new List<SelectListItem>();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.type_user == "encadrant")
+                {
+                    responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id });
+                }
+            }
+            ViewBag.responsable_id = responsables;
             return View(section);
         }
 
@@ -118,7 +148,24 @@ namespace SportAsso.Controllers
                 return HttpNotFound();
             }
             ViewBag.discipline_id = new SelectList(db.discipline, "discipline_id", "label", section.discipline_id);
-            ViewBag.responsable_id = new SelectList(db.utilisateur, "utilisateur_id", "login", section.responsable_id);
+            //ViewBag.responsable_id = new SelectList(db.utilisateur, "utilisateur_id", "login", section.responsable_id);
+            var responsables = new List<SelectListItem>();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.type_user == "encadrant")
+                {
+                    if(u.utilisateur_id == section.responsable_id)
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = true });
+                    }
+                    else
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = false });
+                    }
+                   
+                }
+            }
+            ViewBag.responsable_id = responsables;
             return View(section);
         }
 
@@ -128,15 +175,32 @@ namespace SportAsso.Controllers
         [Authorize(Roles = "encadrant , admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "section_id,description,discipline_id,label,prix")] section section)
+        public ActionResult Edit([Bind(Include = "section_id,description,discipline_id,label,prix,responsable_id")] section section)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(section).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Redirect");
             }
             ViewBag.discipline_id = new SelectList(db.discipline, "discipline_id", "label", section.discipline_id);
+            var responsables = new List<SelectListItem>();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.type_user == "encadrant")
+                {
+                    if (u.utilisateur_id == section.responsable_id)
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = true });
+                    }
+                    else
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = false });
+                    }
+
+                }
+            }
+            ViewBag.responsable_id = responsables;
             return View(section);
         }
 
@@ -165,7 +229,7 @@ namespace SportAsso.Controllers
             section section = db.section.Find(id);
             db.section.Remove(section);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Redirect");
         }
 
         protected override void Dispose(bool disposing)

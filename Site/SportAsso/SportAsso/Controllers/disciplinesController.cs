@@ -37,8 +37,22 @@ namespace SportAsso.Controllers
         [Authorize(Roles ="encadrant , admin")]
         public ActionResult Index()
         {
+            if (User.IsInRole("encadrant"))
+            {
+                return Redirect("/Home/Encadrant");
+            }
             var discipline = db.discipline.Include(d => d.utilisateur);
             return View(discipline.ToList());
+        }
+
+        [Authorize(Roles = "encadrant , admin")]
+        public ActionResult Redirect()
+        {
+            if (User.IsInRole("encadrant"))
+            {
+                return Redirect("/Home/Encadrant");
+            }
+            return Redirect("/disciplines/Index");
         }
 
         // GET: disciplines/Details/5
@@ -77,7 +91,7 @@ namespace SportAsso.Controllers
             {
                 db.discipline.Add(discipline);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Redirect");
             }
 
             ViewBag.responsable_discipline_id = new SelectList(db.utilisateur, "utilisateur_id", "login", discipline.responsable_discipline_id);
@@ -113,7 +127,7 @@ namespace SportAsso.Controllers
             {
                 db.Entry(discipline).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Redirect");
             }
             ViewBag.responsable_discipline_id = new SelectList(db.utilisateur, "utilisateur_id", "login", discipline.responsable_discipline_id);
             return View(discipline);
@@ -144,7 +158,7 @@ namespace SportAsso.Controllers
             discipline discipline = db.discipline.Find(id);
             db.discipline.Remove(discipline);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Redirect");
         }
 
         protected override void Dispose(bool disposing)

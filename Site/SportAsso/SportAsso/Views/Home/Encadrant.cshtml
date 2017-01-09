@@ -62,7 +62,60 @@
     <hr />
     @if (ViewBag.hasSection == "false")
     {
+        <table class="table">
+            <tr>
+                <th>
+                    <bold> Discipline </bold>
+                </th>
+                <th>
+                    <bold> Label </bold>
+                </th>
+                <th>
+                    <bold> Description </bold>
+                </th>
 
+                <th>
+                    <bold> Prix </bold>
+                </th>
+                
+                <th>
+                    <bold>responsable</bold>
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item2 in ViewBag.section)
+            {
+                <tr>
+                    <td>
+                        @item2.discipline.label
+                    </td>
+                    <td>
+                        @item2.label
+                    </td>
+                    <td>
+                        @item2.description
+                    </td>
+                    <td>
+                        @item2.prix
+                    </td>
+                    
+                    <td>
+                        @SportAsso.Controllers.sectionsController.FindUserFullNameById(item2.responsable_id)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Voir les séances", "Index", "seances", new { id = item2.section_id }, new { @class = "btn btn - default" })
+                        <br />
+                        <br />
+                        @Html.ActionLink("Modifier la section", "Edit", "sections", new { id = item2.section_id }, new { @class = "btn btn - default" })
+                        <br />
+                        <br />
+                        @Html.ActionLink("Supprimer la section", "Delete", "sections", new { id = item2.section_id }, new { @class = "btn btn - default" })
+                    </td>
+                </tr>
+            }
+
+        </table>
     }
     else
     {
@@ -75,12 +128,73 @@
     <hr />
     @if (ViewBag.hasSeance == "false")
     {
+        <table class="table">
+            <tr>
+                <th>
+                    <bold> Séance</bold>
+                </th>
+                <th>
+                    <bold> Jour de la semaine</bold>
+                </th>
+                <th>
+                    <bold> Heure de début </bold>
+                </th>
+                <th>
+                    <bold> Heure de fin </bold>
+                </th>
+                <th>
+                    <bold> Lieu </bold>
+                </th>
+                <th>
+                    <bold> Places disponnibles </bold>
+                </th>
+                <th>
+                    <bold> Encadrant </bold>
+                </th>
+                <th></th>
+            </tr>
 
+            @foreach (var item in ViewBag.seance)
+            {
+                <tr>
+                    <td>
+                        @SportAsso.Controllers.sectionsController.FindFullTitleById(item.section_id)
+                    </td>
+                    <td>
+                        @item.jour_de_la_semaine
+                    </td>
+                    <td>
+                        @SportAsso.Controllers.participesController.HourFormator("" + item.heure_debut)
+                    </td>
+                    <td>
+                        @SportAsso.Controllers.participesController.HourFormator("" + item.heure_fin)
+                    </td>
+                    <td>
+                        @item.lieu.label
+                    </td>
+                    <td>
+                        @SportAsso.Controllers.seancesController.GetStringNumberOfParticipantByID(item.seance_id) /  @item.places_max
+                    </td>
+                    <td>
+                        @SportAsso.Controllers.disciplinesController.GetUserFullNameByLogin(item.utilisateur.login)
+                    </td>
+                   
+                    <td>
+                         @Html.ActionLink("Modifier", "Edit", "seances", new { id = item.seance_id }, new { @class = "btn btn - default" })
+                        <br/>
+                        <br/>
+                        @Html.ActionLink("Supprimer", "Delete", "seances", new { id = item.seance_id }, new { @class = "btn btn - default" })
+                    </td>
+                  
+
+                </tr>
+            }
+            </table>
     }
     else
     {
         <p>Aucunes séances trouvés</p>
     }
-  
-    <hr />
+
+            <hr />
 </section>
