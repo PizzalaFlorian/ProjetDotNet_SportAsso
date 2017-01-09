@@ -1,0 +1,50 @@
+﻿@model IEnumerable<SportAsso.document>
+
+@{
+    ViewBag.Title = "MesDocuments";
+}
+
+<h4 class="center">Mes Documents</h4>
+
+<p>
+    @Html.ActionLink("Ajouter un document", "Upload")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.type_document)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.path_document)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.valide)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.utilisateur.login)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.type_document)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.path_document)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.valide)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.utilisateur.login)
+        </td>
+        <td>
+            @Html.ActionLink("Modifier", "Edit", new { id=item.document_id }) |
+            @Html.ActionLink("Supprimer", "Delete", new { id=item.document_id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -45,6 +45,15 @@ namespace SportAsso.Controllers
             return res;
         }
 
+        public static string StatutPaiment(bool paiment)
+        {
+            if (paiment)
+            {
+                return "Payer";
+            }
+            return "En attente de paiment";
+        }
+
         [Authorize]
         public ActionResult MesInscriptions()
         {

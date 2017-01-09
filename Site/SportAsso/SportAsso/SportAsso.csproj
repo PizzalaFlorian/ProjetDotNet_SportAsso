@@ -398,9 +398,12 @@
     <Content Include="Views\seances\Edit.cshtml" />
     <Content Include="Views\seances\Index.cshtml" />
     <Content Include="Views\seances\Inscriptions.cshtml" />
+    <Content Include="Views\documents\MesDocuments.cshtml" />
+    <Content Include="Views\documents\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

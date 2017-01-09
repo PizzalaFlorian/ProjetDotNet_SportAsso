@@ -8,18 +8,79 @@
 <section>
     <h3> Mes Disciplines</h3>
     <hr/>
-    <p>Aucunes disciplies trouvés</p>
+    @if (ViewBag.hasDiscipline == "false")
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    <bold> Label </bold>
+                </th>
+                <th>
+                    <bold> Description </bold>
+                </th>
+                <th>
+                    <bold>responsable</bold>
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in ViewBag.discipline)
+            {
+                <tr>
+                    <td>
+                        @item.label
+                    </td>
+                    <td>
+                        @item.description
+                    </td>
+                    <td>
+                        @SportAsso.Controllers.disciplinesController.GetUserFullNameByLogin(item.utilisateur.login)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Voir les sections", "Index", "sections", new { id = item.discipline_id }, new { @class = "btn btn - default" })
+                        <br />
+                        <br />
+                        @Html.ActionLink("Modifier la discipline", "Edit", "disciplines", new { id = item.discipline_id }, new { @class = "btn btn - default" })
+                        <br />
+                        <br />
+                        @Html.ActionLink("Supprimer la discipline", "Delete", "disciplines", new { id = item.discipline_id }, new { @class = "btn btn - default" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <p>Aucunes disciplies trouvés</p>
+    }
+    
     <hr />
 </section>
 <section>
     <h3> Mes Sections</h3>
     <hr />
-    <p>Aucunes sections trouvés</p>
+    @if (ViewBag.hasSection == "false")
+    {
+
+    }
+    else
+    {
+        <p>Aucunes sections trouvés</p>
+    }
     <hr />
 </section>
 <section>
     <h3> Mes Séances</h3>
     <hr />
-    <p>Aucunes séances trouvés</p>
+    @if (ViewBag.hasSeance == "false")
+    {
+
+    }
+    else
+    {
+        <p>Aucunes séances trouvés</p>
+    }
+  
     <hr />
 </section>

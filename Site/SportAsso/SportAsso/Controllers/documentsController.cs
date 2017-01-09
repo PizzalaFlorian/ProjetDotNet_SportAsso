@@ -7,6 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SportAsso;
+using System.IO;
+using System.Security.AccessControl;
+using System.Security.Principal;
+using System.Security.Permissions;
+using System.Security;
 
 namespace SportAsso.Controllers
 {
@@ -19,6 +24,82 @@ namespace SportAsso.Controllers
         {
             var document = db.document.Include(d => d.utilisateur);
             return View(document.ToList());
+        }
+
+        public static long GetIdByLogin(string login)
+        {
+            SportAssoEntities db = new SportAssoEntities();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if(u.login == login)
+                {
+                    return u.utilisateur_id;
+                }
+            }
+            return 0;
+        }
+
+        [Authorize]
+        public ActionResult MesDocuments()
+        {
+            long id = GetIdByLogin(User.Identity.Name);
+            var document = from b in db.document.Include(d => d.utilisateur)
+                           where b.utilisateur_id == id
+                           select b;
+            return View(document.ToList());
+        }
+
+        [Authorize]
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase filee)
+        {
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    long id = GetIdByLogin(User.Identity.Name);
+                    var fileName = Path.GetFileName(file.FileName);
+                    string upload_path = "D:\\workspace\\DotNET\\Projet\\ProjetDotNet_SportAsso\\Site\\SportAsso\\SportAsso\\Upload\\";
+                    if (!Directory.Exists("~/Upload/" + id + "/"))
+                    {
+                        FileIOPermission f2 = new FileIOPermission(FileIOPermissionAccess.Read, upload_path);
+                        f2.AddPathList(FileIOPermissionAccess.Write | FileIOPermissionAccess.Read, upload_path);
+                        try
+                        {
+                            f2.Demand();
+                        }
+                        catch (SecurityException s)
+                        {
+                            Console.WriteLine(s.Message);
+                        }
+                        /*Directory.CreateDirectory(upload_path + id + "\\");
+                        FileIOPermission f3 = new FileIOPermission(FileIOPermissionAccess.Read, upload_path + id + "\\");
+                        f3.AddPathList(FileIOPermissionAccess.Write | FileIOPermissionAccess.Read, upload_path + id + "\\");
+                        try
+                        {
+                            f3.Demand();
+                        }
+                        catch (SecurityException s)
+                        {
+                            Console.WriteLine(s.Message);
+                        }*/
+                    }
+                    //var path = Path.Combine(Server.MapPath("~/Upload/"), fileName);
+                    var path = upload_path + id + "\\" + fileName;
+                    file.SaveAs(path);
+                    return RedirectToAction("Create",path);
+                }
+            }
+
+            return View();
         }
 
         // GET: documents/Details/5
@@ -37,9 +118,12 @@ namespace SportAsso.Controllers
         }
 
         // GET: documents/Create
-        public ActionResult Create()
+        public ActionResult Create(string document_path)
         {
-            ViewBag.utilisateur_id = new SelectList(db.utilisateur, "utilisateur_id", "login");
+            ViewBag.path_document = document_path;
+            ViewBag.utilisateur_id = GetIdByLogin(User.Identity.Name);
+            ViewBag.type_document = "certificat médical";
+            ViewBag.valide = 2;
             return View();
         }
 
@@ -48,7 +132,7 @@ namespace SportAsso.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "document_id,utilisateur_id,type_document,path_document")] document document)
+        public ActionResult Create([Bind(Include = "document_id,utilisateur_id,type_document,path_document,valide")] document document)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +166,7 @@ namespace SportAsso.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "document_id,utilisateur_id,type_document,path_document")] document document)
+        public ActionResult Edit([Bind(Include = "document_id,utilisateur_id,type_document,path_document,valide")] document document)
         {
             if (ModelState.IsValid)
             {

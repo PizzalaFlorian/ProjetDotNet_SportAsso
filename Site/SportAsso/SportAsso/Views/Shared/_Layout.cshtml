@@ -31,7 +31,7 @@
                         <li>@Html.ActionLink("Utilisateurs", "Index", "utilisateurs")</li>
                         <li>@Html.ActionLink("Disciplines", "Index", "disciplines")</li>
                         <li>@Html.ActionLink("Sections", "Index", "sections")</li>
-                        <li>@Html.ActionLink("Dossiers", "Index", "documents")</li>
+                        <li>@Html.ActionLink("Dossiers", "MesDocuments", "documents")</li>
                         <li>@Html.ActionLink("Paiments", "Paiments", "participations")</li>
                         <li>@Html.ActionLink("Calendrier", "calendrier", "participe")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
@@ -39,7 +39,7 @@
                     else {
                         if (User.IsInRole("encadrant"))
                         {
-                            <li>@Html.ActionLink("Disciplines", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
                             <li>@Html.ActionLink("Calendrier", "calendrier", "participe")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         }

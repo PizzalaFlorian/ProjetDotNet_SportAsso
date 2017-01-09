@@ -1,0 +1,14 @@
+﻿@model SportAsso.document
+
+@{
+    ViewBag.Title = "Upload";
+}
+
+<h4 class="center">Ajouter un document 1/2</h4>
+
+@using (Html.BeginForm("Upload", "documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" />
+    <input type="submit" name="Enregistrer le document" id="Submit" value="Upload" />
+}
+

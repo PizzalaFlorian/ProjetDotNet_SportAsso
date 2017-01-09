@@ -66,10 +66,61 @@ namespace SportAsso.Controllers
             return Redirect("/Home/Index");
         }
 
+        public static long GetIdByUserName(string login)
+        {
+            SportAssoEntities db = new SportAssoEntities();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if(u.login == login)
+                {
+                    return u.utilisateur_id;
+                }
+            }
+            return 0;
+        }
+
         [Authorize(Roles ="encadrant")]
         public ActionResult Encadrant()
         {
             ViewBag.Message = "Acceuil Encadrant";
+            long id = GetIdByUserName(User.Identity.Name);
+
+            /*discipline*/
+            IQueryable<SportAsso.discipline> discipline = from di in db.discipline where di.responsable_discipline_id == id select di;
+            ViewBag.discipline = discipline.ToList<discipline>();
+            if (!discipline.Any())
+            {
+                ViewBag.hasDiscipline = "true";
+            }
+            else
+            {
+                ViewBag.hasDiscipline = "false";
+            }
+
+            /*sections*/
+            IQueryable<SportAsso.section> section = from di in db.section where di.responsable_id == id select di;
+            ViewBag.section = section.ToList<section>();
+            if (!section.Any())
+            {
+                ViewBag.hasSection = "true";
+            }
+            else
+            {
+                ViewBag.hasSection = "false";
+            }
+
+            /*seance*/
+            IQueryable<SportAsso.seance> seance = from di in db.seance where di.encadrant_id == id select di;
+            ViewBag.seance = seance.ToList<seance>();
+            if (!seance.Any())
+            {
+                ViewBag.hasSeance = "true";
+            }
+            else
+            {
+                ViewBag.hasSeance = "false";
+            }
+
             return View();
         }
 
@@ -93,17 +144,18 @@ namespace SportAsso.Controllers
             return View();
         }
 
+        /*
         public ActionResult disciplineInfo( int id)
         {
             String res = null;
             foreach(discipline d in db.discipline)
             {
-                if(d.discipline_id == id)
+                if(d.responsable_discipline_id == id)
                 {
                     res = d.description;
                 }
             }
             return View(res);
-        }
+        }*/
     }
 }

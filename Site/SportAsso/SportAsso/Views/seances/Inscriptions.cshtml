@@ -6,69 +6,76 @@
 
 <h4 class="center">@ViewData["title"]</h4>
 
-<table class="table">
-    <tr>
-        <th>
-            <bold> Séance</bold>
-        </th>
-        <th>
-            <bold> Jour de la semaine</bold>
-        </th>
-        <th>
-            <bold> Heure de début </bold>
-        </th>
-        <th>
-            <bold> Heure de fin </bold>
-        </th>
-        <th>
-            <bold> Lieu </bold>
-        </th>
-        <th>
-            <bold> Places disponnibles </bold>
-        </th>
-        <th>
-            <bold> Encadrant </bold>
-        </th>
-        <th></th>
-    </tr>
+@Html.ActionLink("Retour", "Index", "Home", null, new { @class = "btn btn - default" })
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @SportAsso.Controllers.sectionsController.FindFullTitleById(item.section_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.jour_de_la_semaine)
-        </td>      
-        <td>
-            @SportAsso.Controllers.participesController.HourFormator(""+ item.heure_debut)
-        </td>
-        <td>
-            @SportAsso.Controllers.participesController.HourFormator("" + item.heure_fin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lieu.label)
-        </td>
-        <td>
-            @SportAsso.Controllers.seancesController.GetStringNumberOfParticipantByID(item.seance_id) /  @Html.DisplayFor(modelItem => item.places_max)
-        </td>
-        <td>
-            @SportAsso.Controllers.disciplinesController.GetUserFullNameByLogin(item.utilisateur.login)
-        </td>
-        @if (!SportAsso.Controllers.seancesController.IsComplet(item.seance_id))
-        {
+    <table class="table">
+        <tr>
+            <th>
+                <bold> Séance</bold>
+            </th>
+            <th>
+                <bold> Jour de la semaine</bold>
+            </th>
+            <th>
+                <bold> Heure de début </bold>
+            </th>
+            <th>
+                <bold> Heure de fin </bold>
+            </th>
+            <th>
+                <bold> Lieu </bold>
+            </th>
+            <th>
+                <bold> Places disponnibles </bold>
+            </th>
+            <th>
+                <bold> Encadrant </bold>
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
             <td>
-                @Html.ActionLink("S'inscrire", "Inscription", "participes", new { id = item.seance_id }, new { @class = "btn btn - default" })
+                @SportAsso.Controllers.sectionsController.FindFullTitleById(item.section_id)
             </td>
-        }
-        else
-        {
             <td>
-                Complet
+                @Html.DisplayFor(modelItem => item.jour_de_la_semaine)
+            </td>      
+            <td>
+                @SportAsso.Controllers.participesController.HourFormator("" + item.heure_debut)
             </td>
-        }
+            <td>
+                @SportAsso.Controllers.participesController.HourFormator("" + item.heure_fin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lieu.label)
+            </td>
+            <td>
+                @SportAsso.Controllers.seancesController.GetStringNumberOfParticipantByID(item.seance_id) /  @Html.DisplayFor(modelItem => item.places_max)
+            </td>
+            <td>
+                @SportAsso.Controllers.disciplinesController.GetUserFullNameByLogin(item.utilisateur.login)
+            </td>
+            @if (!SportAsso.Controllers.seancesController.IsComplet(item.seance_id))
+            {
+                <td>
+                    @Html.ActionLink("S'inscrire", "Inscription", "participes", new { id = item.seance_id }, new { @class = "btn btn - default" })
+                </td>
+            }
+            else
+            {
+                <td>
+                    Complet
+                </td>
+            }
 
-    </tr>
-}
-
+        </tr>
+    }
 </table>
+
+@if(ViewBag.empty == "true")
+{
+    <h5 class="center"> @ViewData["empty"] </h5>
+}

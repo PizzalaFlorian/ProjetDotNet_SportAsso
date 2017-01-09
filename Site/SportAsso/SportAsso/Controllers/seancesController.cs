@@ -77,6 +77,20 @@ namespace SportAsso.Controllers
             var seance = from b in db.seance.Include(s => s.lieu).Include(s => s.section).Include(s => s.utilisateur)
                          where b.seance_id == id
                          select b;
+
+            bool isEmpty = !seance.Any();
+            if (isEmpty)
+            {
+                ViewBag.empty = "true";
+                ViewData["empty"] = "Aucune séance de disponible pour cette discipline";
+            }
+            else
+            {
+                ViewBag.empty = "false";
+                ViewData["empty"] = "";
+            }
+
+            ViewBag.section_id = id;
             return View(seance.ToList());
         }
 
