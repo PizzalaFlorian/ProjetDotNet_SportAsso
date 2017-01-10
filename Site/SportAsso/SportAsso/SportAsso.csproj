@@ -266,6 +266,37 @@
     <Content Include="Content\bulma\css\bulma.css" />
     <Content Include="Content\bulma\js\bulma.js" />
     <Content Include="Content\bulma\js\jquery-2.2.0.min.js" />
+    <Content Include="Content\fullcalendar\calendar\fullcalendar-1.6.4.js" />
+    <Content Include="Content\fullcalendar\calendar\fullcalendar-2.0.2.js" />
+    <Content Include="Content\fullcalendar\calendar\fullcalendar-2.0.3.js" />
+    <Content Include="Content\fullcalendar\calendar\fullcalendar.css" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\animated-overlay.gif" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-bg_flat_15_cd0a0a_40x100.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-bg_glass_100_e4f1fb_1x400.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-bg_glass_50_3baae3_1x400.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-bg_glass_80_d7ebf9_1x400.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-bg_highlight-soft_100_deedf7_1x100.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-bg_highlight-soft_25_ffef8f_1x100.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-icons_2694e8_256x240.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-icons_3d80b3_256x240.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-icons_72a7cf_256x240.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\fullcalendar\css\cupertino\jquery-ui-1.10.3.min.css" />
+    <Content Include="Content\fullcalendar\css\cupertino\jquery-ui-1.11.0.css" />
+    <Content Include="Content\fullcalendar\css\cupertino\jquery-ui-1.11.0.min.css" />
+    <Content Include="Content\fullcalendar\css\jquery.qtip-2.2.0.css" />
+    <Content Include="Content\fullcalendar\jquery\jquery-2.1.1.js" />
+    <Content Include="Content\fullcalendar\jquery\jquery-2.1.1.min.js" />
+    <Content Include="Content\fullcalendar\jquery\jquery-ui-1.11.1.js" />
+    <Content Include="Content\fullcalendar\jquery\jquery-ui-1.11.1.min.js" />
+    <Content Include="Content\fullcalendar\jquery\jquery-ui-timepicker-addon-1.4.5.js" />
+    <Content Include="Content\fullcalendar\jquery\jquery.qtip-2.2.0.js" />
+    <Content Include="Content\fullcalendar\jquery\moment-2.8.1.min.js" />
+    <Content Include="Content\fullcalendar\scripts\calendarscript.js" />
     <Content Include="Content\img\balls.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -310,6 +341,7 @@
     <Content Include="Content\materialize\fonts\roboto\Roboto-Thin.ttf" />
     <Content Include="Content\materialize\fonts\roboto\Roboto-Thin.woff" />
     <Content Include="Content\materialize\fonts\roboto\Roboto-Thin.woff2" />
+    <Content Include="Content\fullcalendar\jquery\jquery-2.1.1.min.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -400,6 +432,7 @@
     <Content Include="Views\seances\Inscriptions.cshtml" />
     <Content Include="Views\documents\MesDocuments.cshtml" />
     <Content Include="Views\documents\Upload.cshtml" />
+    <Content Include="Views\participes\Calendrier.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

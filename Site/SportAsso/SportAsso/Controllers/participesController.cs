@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SportAsso;
 using Microsoft.AspNet.Identity;
+using System.Globalization;
 
 
 namespace SportAsso.Controllers
@@ -15,6 +16,12 @@ namespace SportAsso.Controllers
     public class participesController : Controller
     {
         private SportAssoEntities db = new SportAssoEntities();
+
+
+        public ActionResult Calendrier()
+        {
+            return View();
+        }
 
         // GET: participes
         [Authorize(Roles = "admin")]
