@@ -14,30 +14,37 @@ namespace SportAsso.Controllers
     {
         private SportAssoEntities db = new SportAssoEntities();
 
+        [Authorize(Roles = "encadrant , admin")]
+        public ActionResult Redirect()
+        {
+            if (User.IsInRole("encadrant"))
+            {
+                return Redirect("/Home/Encadrant");
+            }
+            return Redirect("/seance/Index");
+        }
 
         // GET: seances
         [Authorize(Roles = "encadrant , admin")]
-        public ActionResult Index(long? section_id)
+        public ActionResult Index(long? id)
         {
-            var seance = db.seance.Include(s => s.lieu).Include(s => s.section).Include(s => s.utilisateur); ;
-            if (section_id.HasValue)
+            var seance = db.seance.Include(s => s.lieu).Include(s => s.section).Include(s => s.utilisateur);
+            ViewBag.titre_page = "Liste des Séances";
+            ViewBag.ajoutLier = "false";
+            ViewBag.section_id = 0;
+               
+            if(id.HasValue)
             {
-                seance = from b in db.seance.Include(si => si.lieu).Include(si => si.section).Include(si => si.utilisateur)
-                         where b.section_id == section_id
+               seance = from b in db.seance.Include(si => si.lieu).Include(si => si.section).Include(si => si.utilisateur)
+                         where b.section_id == id
                          select b;
-                section s = db.section.Find(section_id);
+                section s = db.section.Find(id);
                 discipline d = db.discipline.Find(s.discipline_id);
                 ViewBag.titre_page = "Liste des séances de la section " + s.label + " de la discipline " + d.label;
                 ViewBag.ajoutLier = "true";
-                ViewBag.section_id = section_id;
+                ViewBag.section_id = id;
             }
-            else
-            { 
-                ViewBag.titre_page = "Liste des Séances";
-                ViewBag.ajoutLier = "false";
-                ViewBag.section_id = 0;
-            }
- 
+          
             return View(seance.ToList());
         }
 
@@ -115,6 +122,7 @@ namespace SportAsso.Controllers
         }
 
         // GET: seances/Details/5
+        [Authorize(Roles = "encadrant , admin")]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -130,17 +138,46 @@ namespace SportAsso.Controllers
         }
 
         // GET: seances/Create
-        public ActionResult Create()
+        [Authorize(Roles = "encadrant , admin")]
+        public ActionResult Create(long? id)
         {
             ViewBag.lieu_id = new SelectList(db.lieu, "lieu_id", "label");
-            ViewBag.section_id = new SelectList(db.section, "section_id", "description");
-            ViewBag.encadrant_id = new SelectList(db.utilisateur, "utilisateur_id", "login");
+            if (id.HasValue)
+            {
+                ViewBag.section_id = new SelectList(db.section, "section_id", "description",id);
+            }
+            else
+            {
+                ViewBag.section_id = new SelectList(db.section, "section_id", "description");
+            }
+            var responsables = new List<SelectListItem>();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.type_user == "encadrant")
+                {
+                    responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id });
+                }
+            }
+            ViewBag.encadrant_id = responsables;
+
+            var jours = new List<SelectListItem>();
+            jours.Add(new SelectListItem() { Text = "Lundi", Value = "Lundi" });
+            jours.Add(new SelectListItem() { Text = "Mardi", Value = "Mardi" });
+            jours.Add(new SelectListItem() { Text = "Mercredi", Value = "Mercredi" });
+            jours.Add(new SelectListItem() { Text = "Jeudi", Value = "Jeudi" });
+            jours.Add(new SelectListItem() { Text = "Vendredi", Value = "Vendredi" });
+            jours.Add(new SelectListItem() { Text = "Samedi", Value = "Samedi" });
+            jours.Add(new SelectListItem() { Text = "Dimanche", Value = "Dimanche" });
+
+            ViewBag.jour_de_la_semaine = jours;
+            //ViewBag.encadrant_id = new SelectList(db.utilisateur, "utilisateur_id", "login");
             return View();
         }
 
         // POST: seances/Create
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "encadrant , admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "seance_id,encadrant_id,lieu_id,section_id,places_max,heure_debut,heure_fin,jour_de_la_semaine")] seance seance)
@@ -154,11 +191,40 @@ namespace SportAsso.Controllers
 
             ViewBag.lieu_id = new SelectList(db.lieu, "lieu_id", "label", seance.lieu_id);
             ViewBag.section_id = new SelectList(db.section, "section_id", "description", seance.section_id);
-            ViewBag.encadrant_id = new SelectList(db.utilisateur, "utilisateur_id", "login", seance.encadrant_id);
+            //ViewBag.encadrant_id = new SelectList(db.utilisateur, "utilisateur_id", "login", seance.encadrant_id);
+            var responsables = new List<SelectListItem>();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.type_user == "encadrant")
+                {
+                    responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id });
+                }
+            }
+            ViewBag.encadrant_id = responsables;
+            var jours = new List<SelectListItem>();
+            jours.Add(new SelectListItem() { Text = "Lundi", Value = "Lundi" });
+            jours.Add(new SelectListItem() { Text = "Mardi", Value = "Mardi" });
+            jours.Add(new SelectListItem() { Text = "Mercredi", Value = "Mercredi" });
+            jours.Add(new SelectListItem() { Text = "Jeudi", Value = "Jeudi" });
+            jours.Add(new SelectListItem() { Text = "Vendredi", Value = "Vendredi" });
+            jours.Add(new SelectListItem() { Text = "Samedi", Value = "Samedi" });
+            jours.Add(new SelectListItem() { Text = "Dimanche", Value = "Dimanche" });
+
+            ViewBag.jour_de_la_semaine = jours;
             return View(seance);
         }
 
+        public static bool isJourSelected(seance s,string jour)
+        {
+            if(s.jour_de_la_semaine == jour)
+            {
+                return true;
+            }
+            return false;
+        }
+
         // GET: seances/Edit/5
+        [Authorize(Roles = "encadrant , admin")]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -172,13 +238,40 @@ namespace SportAsso.Controllers
             }
             ViewBag.lieu_id = new SelectList(db.lieu, "lieu_id", "label", seance.lieu_id);
             ViewBag.section_id = new SelectList(db.section, "section_id", "description", seance.section_id);
-            ViewBag.encadrant_id = new SelectList(db.utilisateur, "utilisateur_id", "login", seance.encadrant_id);
+            var responsables = new List<SelectListItem>();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.type_user == "encadrant")
+                {
+                    if (u.utilisateur_id == seance.encadrant_id)
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = true });
+                    }
+                    else
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = false });
+                    }
+
+                }
+            }
+            ViewBag.encadrant_id = responsables;
+            var jours = new List<SelectListItem>();
+            jours.Add(new SelectListItem() { Text = "Lundi", Value = "Lundi",Selected = isJourSelected(seance,"Lundi") });
+            jours.Add(new SelectListItem() { Text = "Mardi", Value = "Mardi", Selected = isJourSelected(seance, "Mardi") });
+            jours.Add(new SelectListItem() { Text = "Mercredi", Value = "Mercredi", Selected = isJourSelected(seance, "Mercredi") });
+            jours.Add(new SelectListItem() { Text = "Jeudi", Value = "Jeudi", Selected = isJourSelected(seance, "Jeudi") });
+            jours.Add(new SelectListItem() { Text = "Vendredi", Value = "Vendredi", Selected = isJourSelected(seance, "Vendredi") });
+            jours.Add(new SelectListItem() { Text = "Samedi", Value = "Samedi", Selected = isJourSelected(seance, "Samedi") });
+            jours.Add(new SelectListItem() { Text = "Dimanche", Value = "Dimanche", Selected = isJourSelected(seance, "Dimanche") });
+
+            ViewBag.jour_de_la_semaine = jours;
             return View(seance);
         }
 
         // POST: seances/Edit/5
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "encadrant , admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "seance_id,encadrant_id,lieu_id,section_id,places_max,heure_debut,heure_fin,jour_de_la_semaine")] seance seance)
@@ -191,11 +284,39 @@ namespace SportAsso.Controllers
             }
             ViewBag.lieu_id = new SelectList(db.lieu, "lieu_id", "label", seance.lieu_id);
             ViewBag.section_id = new SelectList(db.section, "section_id", "description", seance.section_id);
-            ViewBag.encadrant_id = new SelectList(db.utilisateur, "utilisateur_id", "login", seance.encadrant_id);
+            var responsables = new List<SelectListItem>();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.type_user == "encadrant")
+                {
+                    if (u.utilisateur_id == seance.encadrant_id)
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = true });
+                    }
+                    else
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = false });
+                    }
+
+                }
+            }
+            ViewBag.encadrant_id = responsables;
+            ViewBag.encadrant_id = responsables;
+            var jours = new List<SelectListItem>();
+            jours.Add(new SelectListItem() { Text = "Lundi", Value = "Lundi", Selected = isJourSelected(seance, "Lundi") });
+            jours.Add(new SelectListItem() { Text = "Mardi", Value = "Mardi", Selected = isJourSelected(seance, "Mardi") });
+            jours.Add(new SelectListItem() { Text = "Mercredi", Value = "Mercredi", Selected = isJourSelected(seance, "Mercredi") });
+            jours.Add(new SelectListItem() { Text = "Jeudi", Value = "Jeudi", Selected = isJourSelected(seance, "Jeudi") });
+            jours.Add(new SelectListItem() { Text = "Vendredi", Value = "Vendredi", Selected = isJourSelected(seance, "Vendredi") });
+            jours.Add(new SelectListItem() { Text = "Samedi", Value = "Samedi", Selected = isJourSelected(seance, "Samedi") });
+            jours.Add(new SelectListItem() { Text = "Dimanche", Value = "Dimanche", Selected = isJourSelected(seance, "Dimanche") });
+
+            ViewBag.jour_de_la_semaine = jours;
             return View(seance);
         }
 
         // GET: seances/Delete/5
+        [Authorize(Roles = "encadrant , admin")]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -211,6 +332,7 @@ namespace SportAsso.Controllers
         }
 
         // POST: seances/Delete/5
+        [Authorize(Roles = "encadrant , admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
