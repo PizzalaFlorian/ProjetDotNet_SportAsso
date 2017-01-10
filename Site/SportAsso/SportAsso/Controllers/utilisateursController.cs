@@ -43,6 +43,12 @@ namespace SportAsso.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
+            var types = new List<SelectListItem>();
+            types.Add(new SelectListItem() { Text = "Adhérent", Value = "adherent" });
+            types.Add(new SelectListItem() { Text = "Encadrant", Value = "encadrant" });
+            types.Add(new SelectListItem() { Text = "Administrateur", Value = "admin" });
+           
+            ViewBag.type_user = types;
             return View();
         }
 
@@ -61,7 +67,23 @@ namespace SportAsso.Controllers
                 return RedirectToAction("Index");
             }
 
+            var types = new List<SelectListItem>();
+            types.Add(new SelectListItem() { Text = "Adhérent", Value = "adherent" });
+            types.Add(new SelectListItem() { Text = "Encadrant", Value = "encadrant" });
+            types.Add(new SelectListItem() { Text = "Administrateur", Value = "admin" });
+
+            ViewBag.type_user = types;
+
             return View(utilisateur);
+        }
+
+        public static bool isMyRole(utilisateur u,string role)
+        {
+            if(u.type_user == role)
+            {
+                return true;
+            }
+            return false;
         }
 
         // GET: utilisateurs/Edit/5
@@ -77,6 +99,14 @@ namespace SportAsso.Controllers
             {
                 return HttpNotFound();
             }
+
+            var types = new List<SelectListItem>();
+            types.Add(new SelectListItem() { Text = "Adhérent", Value = "adherent", Selected = isMyRole(utilisateur,"adherent") });
+            types.Add(new SelectListItem() { Text = "Encadrant", Value = "encadrant", Selected = isMyRole(utilisateur, "encadrant") });
+            types.Add(new SelectListItem() { Text = "Administrateur", Value = "admin", Selected = isMyRole(utilisateur, "admin") });
+
+            ViewBag.type_user = types;
+
             return View(utilisateur);
         }
 
@@ -94,6 +124,14 @@ namespace SportAsso.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            var types = new List<SelectListItem>();
+            types.Add(new SelectListItem() { Text = "Adhérent", Value = "adherent", Selected = isMyRole(utilisateur, "adherent") });
+            types.Add(new SelectListItem() { Text = "Encadrant", Value = "encadrant", Selected = isMyRole(utilisateur, "encadrant") });
+            types.Add(new SelectListItem() { Text = "Administrateur", Value = "admin", Selected = isMyRole(utilisateur, "admin") });
+
+            ViewBag.type_user = types;
+
             return View(utilisateur);
         }
 

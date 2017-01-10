@@ -75,7 +75,16 @@ namespace SportAsso.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
-            ViewBag.responsable_discipline_id = new SelectList(db.utilisateur, "utilisateur_id", "login");
+            //ViewBag.responsable_discipline_id = new SelectList(db.utilisateur, "utilisateur_id", "login");
+            var responsables = new List<SelectListItem>();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.type_user == "encadrant")
+                {
+                    responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = false });
+                }
+            }
+            ViewBag.responsable_discipline_id = responsables;
             return View();
         }
 
@@ -94,7 +103,16 @@ namespace SportAsso.Controllers
                 return RedirectToAction("Redirect");
             }
 
-            ViewBag.responsable_discipline_id = new SelectList(db.utilisateur, "utilisateur_id", "login", discipline.responsable_discipline_id);
+            //ViewBag.responsable_discipline_id = new SelectList(db.utilisateur, "utilisateur_id", "login", discipline.responsable_discipline_id);
+            var responsables = new List<SelectListItem>();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.type_user == "encadrant")
+                {
+                    responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = false });
+                }
+            }
+            ViewBag.responsable_discipline_id = responsables;
             return View(discipline);
         }
 
@@ -111,7 +129,24 @@ namespace SportAsso.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.responsable_discipline_id = new SelectList(db.utilisateur, "utilisateur_id", "login", discipline.responsable_discipline_id);
+            //ViewBag.responsable_discipline_id = new SelectList(db.utilisateur, "utilisateur_id", "login", discipline.responsable_discipline_id);
+            var responsables = new List<SelectListItem>();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.type_user == "encadrant")
+                {
+                    if (u.utilisateur_id == discipline.responsable_discipline_id)
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = true });
+                    }
+                    else
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = false });
+                    }
+
+                }
+            }
+            ViewBag.responsable_discipline_id = responsables;
             return View(discipline);
         }
 
@@ -129,7 +164,24 @@ namespace SportAsso.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Redirect");
             }
-            ViewBag.responsable_discipline_id = new SelectList(db.utilisateur, "utilisateur_id", "login", discipline.responsable_discipline_id);
+            //ViewBag.responsable_discipline_id = new SelectList(db.utilisateur, "utilisateur_id", "login", discipline.responsable_discipline_id);
+            var responsables = new List<SelectListItem>();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.type_user == "encadrant")
+                {
+                    if (u.utilisateur_id == discipline.responsable_discipline_id)
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = true });
+                    }
+                    else
+                    {
+                        responsables.Add(new SelectListItem() { Text = u.prenom + " " + u.nom + " " + u.login, Value = "" + u.utilisateur_id, Selected = false });
+                    }
+
+                }
+            }
+            ViewBag.responsable_discipline_id = responsables;
             return View(discipline);
         }
 

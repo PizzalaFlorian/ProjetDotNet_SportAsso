@@ -14,10 +14,30 @@ namespace SportAsso.Controllers
     {
         private SportAssoEntities db = new SportAssoEntities();
 
+
         // GET: seances
-        public ActionResult Index()
+        [Authorize(Roles = "encadrant , admin")]
+        public ActionResult Index(long? section_id)
         {
-            var seance = db.seance.Include(s => s.lieu).Include(s => s.section).Include(s => s.utilisateur);
+            var seance = db.seance.Include(s => s.lieu).Include(s => s.section).Include(s => s.utilisateur); ;
+            if (section_id.HasValue)
+            {
+                seance = from b in db.seance.Include(si => si.lieu).Include(si => si.section).Include(si => si.utilisateur)
+                         where b.section_id == section_id
+                         select b;
+                section s = db.section.Find(section_id);
+                discipline d = db.discipline.Find(s.discipline_id);
+                ViewBag.titre_page = "Liste des séances de la section " + s.label + " de la discipline " + d.label;
+                ViewBag.ajoutLier = "true";
+                ViewBag.section_id = section_id;
+            }
+            else
+            { 
+                ViewBag.titre_page = "Liste des Séances";
+                ViewBag.ajoutLier = "false";
+                ViewBag.section_id = 0;
+            }
+ 
             return View(seance.ToList());
         }
 
