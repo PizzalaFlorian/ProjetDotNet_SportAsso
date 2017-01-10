@@ -10,7 +10,7 @@
         @Html.ActionLink("Liste des Disciplines", "Index", new { id = 0 }, new { @class = "collection-item active" })
         @foreach (var item in Model)
         {
-            @Html.ActionLink(item.label, "Index" , new { id = item.responsable_discipline_id }, new {@class = "collection-item" })
+            @Html.ActionLink(item.label, "Index" , new { id = item.discipline_id }, new {@class = "collection-item" })
         }
     </div>
     <div class="panel panel-body pad5 w80">

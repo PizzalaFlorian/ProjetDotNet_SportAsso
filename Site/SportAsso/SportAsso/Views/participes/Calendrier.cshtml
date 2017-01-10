@@ -10,7 +10,7 @@
         @Html.ActionLink("Liste des Disciplines", "Index", new { id = 0 }, new { @class = "collection-item active" })
         @foreach (var item in Model)
         {
-            @Html.ActionLink(item.label, "Calendrier", new { id = item.responsable_discipline_id }, new { @class = "collection-item" })
+            @Html.ActionLink(item.label, "Calendrier", new { id = item.discipline_id }, new { @class = "collection-item" })
         }
     </div>
     <div class="panel panel-body pad5 w80">
@@ -24,19 +24,38 @@
     {
         <table class="table">
             <tr>
-                <th>
-                    <bold>Section</bold>
-                </th>
-            </tr>
-            @foreach (var s in ViewBag.listSeance)
-            {
-                <tr>
+                @foreach (var j in ViewBag.jours)
+                {
                     <th>
-                        @SportAsso.Controllers.sectionsController.FindFullTitleById(s.section_id)
+                        <bold>@j</bold>
                     </th>
+                }
+            </tr>
+            <tr>
+                @foreach (var jour in ViewBag.jours)
+                {
+                    foreach (var s in ViewBag.listSeance)
+                    {
+                        if (ViewBag.id == s.section.discipline_id && s.jour_de_la_semaine == jour)
+                        {
+                       
+                        <td>
+                            <bold>@SportAsso.Controllers.sectionsController.FindFullTitleById(s.section_id)</bold>
+                            <br/>
+                            de @SportAsso.Controllers.participesController.HourFormator("" + s.heure_debut) à @SportAsso.Controllers.participesController.HourFormator("" + s.heure_fin)
+                            <br/>
+                            au @s.lieu.label
+                            <br/>
+                            encadré par @SportAsso.Controllers.disciplinesController.GetUserFullNameByLogin(s.utilisateur.login)
+                        </td>
+                        
+                        }
+                    }
+                   
+                }
                 </tr>
-            }
-        </table>
+
+            </table>
     }
     </div>
 </div>

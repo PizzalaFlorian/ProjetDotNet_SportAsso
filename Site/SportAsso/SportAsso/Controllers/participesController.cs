@@ -26,16 +26,20 @@ namespace SportAsso.Controllers
             {
                 ViewBag.accueil = false;
                 discipline d = db.discipline.Find(id);
-                /* IQueryable<SportAsso.seance> seances = from seance in db.seance.Include(si => si.lieu).Include(si => si.section)
+                IQueryable<SportAsso.seance> seances = from seance in db.seance.Include(si => si.lieu).Include(si => si.section)
                                                         //where seance.section.discipline_id == id
-                                                        select seance;*/
+                                                        select seance;
+                List<string> jours = new List<string>();
+                jours.Add("Lundi");
+                jours.Add("Mardi");
+                jours.Add("Mercredi");
+                jours.Add("Jeudi");
+                jours.Add("Vendredi");
+                jours.Add("Samedi");
+                jours.Add("Dimanche");
 
-                IQueryable<SportAsso.seance> seances =  from sea in db.seance.Include(si => si.lieu).Include(si => si.section)
-                                                            join sec in db.section on sea.section_id equals sec.section_id
-                                                            join dis in db.discipline on sec.discipline_id equals dis.discipline_id
-                                                            where dis.discipline_id == id
-                                                            select sea;
-
+                ViewBag.jours = jours;
+                ViewBag.id = id;
                 ViewBag.listSeance = seances.ToList<seance>();
             }
             return View(discipline.ToList());
