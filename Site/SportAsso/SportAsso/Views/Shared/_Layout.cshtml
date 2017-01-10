@@ -9,9 +9,22 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
+  
     <link href="~/Content/materialize/css/materialize.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bulma/css/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bulma/css/jquery-ui.structure.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bulma/css/jquery-ui.theme.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="~/Content/bulma/js/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="~/Content/bulma/js/jquery.js"></script>
+    <script type="text/javascript" src="~/Content/bulma/js/jquery-ui.min.js"></script>
     <script src="~/Content/materialize/js/materialize.min.js"></script>
+    <script  type="text/javascript">
+
+            $(document).ready(function () {
+                $("#accordion").accordion();
+            });
+           
+    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -33,20 +46,20 @@
                         <li>@Html.ActionLink("Sections", "Index", "sections")</li>
                         <li>@Html.ActionLink("Dossiers", "MesDocuments", "documents")</li>
                         <li>@Html.ActionLink("Paiments", "Paiments", "participations")</li>
-                        <li>@Html.ActionLink("Calendrier", "calendrier", "participe")</li>
+                        <li>@Html.ActionLink("Calendrier", "Calendrier", "participes")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     }
                     else {
                         if (User.IsInRole("encadrant"))
                         {
                             <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Calendrier", "calendrier", "participe")</li>
+                            <li>@Html.ActionLink("Calendrier", "Calendrier", "participes")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         }
                         else
                         {
                             <li>@Html.ActionLink("Disciplines", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Calendrier", "calendrier", "participe")</li>
+                            <li>@Html.ActionLink("Calendrier", "Calendrier", "participes")</li>
                             <li>@Html.ActionLink("Mes documents", "MesDocuments", "documents")</li>
                             <li>@Html.ActionLink("Mes inscriptions", "MesInscriptions", "participes")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>

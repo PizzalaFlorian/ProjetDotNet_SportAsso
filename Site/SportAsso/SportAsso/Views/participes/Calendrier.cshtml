@@ -1,2 +1,46 @@
-﻿<asp:Calender ID="Calendar1" runat="server">
-</asp:Calender>
+﻿@{
+    ViewBag.Title = "Calendrier";
+}
+
+@model IEnumerable<SportAsso.discipline>
+
+<div class="flexRow">
+    <div class="nav navbar-left collection w20">
+        <!--<a href="#" class="collection-item active">Liste des Disciplines</a>-->
+        @Html.ActionLink("Liste des Disciplines", "Index", new { id = 0 }, new { @class = "collection-item active" })
+        @foreach (var item in Model)
+        {
+            @Html.ActionLink(item.label, "Calendrier", new { id = item.responsable_discipline_id }, new { @class = "collection-item" })
+        }
+    </div>
+    <div class="panel panel-body pad5 w80">
+    <h3 class="center"> Calendrier des séances de sports </h3>
+    @if (ViewBag.accueil == true)
+    {
+        <br />
+            <p class="center">Cliquez sur une discipline pour afficher le calendrier de la discipline</p>
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    <bold>Section</bold>
+                </th>
+            </tr>
+            @foreach (var s in ViewBag.listSeance)
+            {
+                <tr>
+                    <th>
+                        @SportAsso.Controllers.sectionsController.FindFullTitleById(s.section_id)
+                    </th>
+                </tr>
+            }
+        </table>
+    }
+    </div>
+</div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

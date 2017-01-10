@@ -17,10 +17,28 @@ namespace SportAsso.Controllers
     {
         private SportAssoEntities db = new SportAssoEntities();
 
-
-        public ActionResult Calendrier()
+      
+        public ActionResult Calendrier(long? id)
         {
-            return View();
+            var discipline = db.discipline;
+            ViewBag.accueil = true;
+            if (id.HasValue)
+            {
+                ViewBag.accueil = false;
+                discipline d = db.discipline.Find(id);
+                /* IQueryable<SportAsso.seance> seances = from seance in db.seance.Include(si => si.lieu).Include(si => si.section)
+                                                        //where seance.section.discipline_id == id
+                                                        select seance;*/
+
+                IQueryable<SportAsso.seance> seances =  from sea in db.seance.Include(si => si.lieu).Include(si => si.section)
+                                                            join sec in db.section on sea.section_id equals sec.section_id
+                                                            join dis in db.discipline on sec.discipline_id equals dis.discipline_id
+                                                            where dis.discipline_id == id
+                                                            select sea;
+
+                ViewBag.listSeance = seances.ToList<seance>();
+            }
+            return View(discipline.ToList());
         }
 
         // GET: participes
