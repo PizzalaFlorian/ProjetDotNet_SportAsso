@@ -17,7 +17,32 @@ namespace SportAsso.Controllers
     {
         private SportAssoEntities db = new SportAssoEntities();
 
-      
+        public static utilisateur FindUserByLogin(string login)
+        {
+            SportAssoEntities db = new SportAssoEntities();
+            foreach (utilisateur u in db.utilisateur)
+            {
+                if (u.login == login)
+                {
+                    return u;
+                }
+            }
+            return new utilisateur();
+        }
+
+        [Authorize]
+        public static bool isInscrit(long seance_id,string login)
+        {
+            if(login != null)
+            {
+                SportAssoEntities db = new SportAssoEntities();
+                long user_id = FindUserByLogin(login).utilisateur_id;
+                return db.participe.Any(u => u.utilisateur_id == user_id
+                            && u.seance_id == seance_id);
+            }
+            return false;
+        }
+
         public ActionResult Calendrier(long? id)
         {
             var discipline = db.discipline;

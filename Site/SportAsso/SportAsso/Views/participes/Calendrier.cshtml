@@ -26,7 +26,7 @@
             <tr>
                 @foreach (var j in ViewBag.jours)
                 {
-                    <th>
+                    <th class="ta-center">
                         <bold>@j</bold>
                     </th>
                 }
@@ -39,7 +39,7 @@
                         if (ViewBag.id == s.section.discipline_id && s.jour_de_la_semaine == jour)
                         {
                        
-                        <td>
+                        <td class="ta-center">
                             <bold>@SportAsso.Controllers.sectionsController.FindFullTitleById(s.section_id)</bold>
                             <br/>
                             de @SportAsso.Controllers.participesController.HourFormator("" + s.heure_debut) à @SportAsso.Controllers.participesController.HourFormator("" + s.heure_fin)
@@ -47,11 +47,17 @@
                             au @s.lieu.label
                             <br/>
                             encadré par @SportAsso.Controllers.disciplinesController.GetUserFullNameByLogin(s.utilisateur.login)
+                            @if (!SportAsso.Controllers.participesController.isInscrit(s.seance_id, User.Identity.Name))
+                            {
+                                <br/>
+                                @Html.ActionLink("S'inscrire", "Inscription", "participes", new { id = s.seance_id }, new { @class = "btn btn - default" })
+                            }
+                           <br>
                         </td>
-                        
+
                         }
                     }
-                   
+
                 }
                 </tr>
 
