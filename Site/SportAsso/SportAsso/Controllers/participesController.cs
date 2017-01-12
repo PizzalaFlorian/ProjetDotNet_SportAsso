@@ -16,6 +16,7 @@ namespace SportAsso.Controllers
     public class participesController : Controller
     {
         private SportAssoEntities db = new SportAssoEntities();
+        private long utilisateur_id;
 
         public static utilisateur FindUserByLogin(string login)
         {
@@ -188,7 +189,7 @@ namespace SportAsso.Controllers
             ViewBag.utilisateur_id = GetUserIdByLogin(User.Identity.GetUserName());
             ViewBag.a_payer = false;
             ViewData["titre"] = "Inscription à la section " + sec.label + " de la discipline " + d.label;
-            ViewData["texte"] = "Comfirmez votre inscription à la séance du "+ s.jour_de_la_semaine + " de "+ s.heure_debut + " à "+ s.heure_fin;
+            ViewData["texte"] = "Comfirmez votre inscription à la séance du "+ s.jour_de_la_semaine + " de "+ HourFormator("" + s.heure_debut) + " à "+ HourFormator("" + s.heure_fin);
             return View();
         }
 
@@ -246,6 +247,33 @@ namespace SportAsso.Controllers
             }
             ViewBag.seance_id = new SelectList(db.seance, "seance_id", "seance_id", participe.seance_id);
             ViewBag.utilisateur_id = new SelectList(db.utilisateur, "utilisateur_id", "login", participe.utilisateur_id);
+            return View(participe);
+        }
+
+        public ActionResult Desinscription( long ? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            long user_id = GetUserIdByLogin(User.Identity.GetUserName());
+            var part = from par in db.participe
+                      where par.seance_id == id && par.utilisateur_id == user_id
+                      select par;
+
+            participe participe = part.ToList().First();
+
+            seance s = db.seance.Find(participe.seance_id);
+            section sec = db.section.Find(s.section_id);
+            discipline d = db.discipline.Find(sec.discipline_id);
+          
+            ViewData["titre"] = "Inscription à la section " + sec.label + " de la discipline " + d.label;
+            ViewData["texte"] = "Comfirmez votre inscription à la séance du " + s.jour_de_la_semaine + " de " + HourFormator("" + s.heure_debut) + " à " + HourFormator("" + s.heure_fin);
+
+            if (participe == null)
+            {
+                return HttpNotFound();
+            }
             return View(participe);
         }
 

@@ -25,10 +25,10 @@
             @SportAsso.Controllers.participesController.StatutPaiment(item.a_payer)
         </td>
         <td>
-            @Html.ActionLink("Voir sur le calendrier", "Calendrier", "participes", null, new { @class = "btn btn - default" }) 
-            <br/>
-            <br/>
-            @Html.ActionLink("Se désinscrire", "Desinscription", "participes", null, new { @class = "btn btn - default" }) 
+            @Html.ActionLink("Voir sur le calendrier", "Calendrier", "participes", null, new { @class = "btn btn - default" })
+            <br />
+            <br />
+             @Html.ActionLink("Se Désinscrire", "Desinscription", "participes", new { id = item.seance_id }, new { @class = "btn btn-red" })
         </td>
     </tr>
 }

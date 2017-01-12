@@ -58,19 +58,27 @@
             <td>
                 @SportAsso.Controllers.disciplinesController.GetUserFullNameByLogin(item.utilisateur.login)
             </td>
-            @if (!SportAsso.Controllers.seancesController.IsComplet(item.seance_id))
+            @if (!SportAsso.Controllers.participesController.isInscrit(item.seance_id, User.Identity.Name))
             {
-                <td>
-                    @Html.ActionLink("S'inscrire", "Inscription", "participes", new { id = item.seance_id }, new { @class = "btn btn - default" })
-                </td>
+                if (!SportAsso.Controllers.seancesController.IsComplet(item.seance_id))
+                {
+                    <td>
+                        @Html.ActionLink("S'inscrire", "Inscription", "participes", new { id = item.seance_id }, new { @class = "btn btn - default" })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Complet
+                    </td>
+                }
             }
             else
             {
                 <td>
-                    Complet
+                    @Html.ActionLink("Se Désinscrire", "Desinscription", "participes", new { id = item.seance_id }, new { @class = "btn btn-red" })
                 </td>
             }
-
         </tr>
     }
 </table>

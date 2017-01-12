@@ -412,6 +412,7 @@
     <Content Include="Views\documents\MesDocuments.cshtml" />
     <Content Include="Views\documents\Upload.cshtml" />
     <Content Include="Views\participes\Calendrier.cshtml" />
+    <Content Include="Views\participes\Desinscription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -76,3 +76,11 @@ textarea {
 .ta-center{
     text-align : center;
 }
+
+.btn-red{
+    background-color: firebrick !important;
+}
+
+.btn-red:hover{
+    background-color: darkred !important;
+}
