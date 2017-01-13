@@ -16,7 +16,7 @@ namespace SportAsso.Controllers
     public class participesController : Controller
     {
         private SportAssoEntities db = new SportAssoEntities();
-        private long utilisateur_id;
+
 
         public static utilisateur FindUserByLogin(string login)
         {
@@ -249,43 +249,41 @@ namespace SportAsso.Controllers
             ViewBag.utilisateur_id = new SelectList(db.utilisateur, "utilisateur_id", "login", participe.utilisateur_id);
             return View(participe);
         }
-
+        
+        [Authorize]
         public ActionResult Desinscription( long ? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            long user_id = GetUserIdByLogin(User.Identity.GetUserName());
-            var part = from par in db.participe
-                      where par.seance_id == id && par.utilisateur_id == user_id
-                      select par;
-
-            participe participe = part.ToList().First();
-
-            seance s = db.seance.Find(participe.seance_id);
-            section sec = db.section.Find(s.section_id);
-            discipline d = db.discipline.Find(sec.discipline_id);
-          
-            ViewData["titre"] = "Inscription à la section " + sec.label + " de la discipline " + d.label;
-            ViewData["texte"] = "Comfirmez votre inscription à la séance du " + s.jour_de_la_semaine + " de " + HourFormator("" + s.heure_debut) + " à " + HourFormator("" + s.heure_fin);
-
-            if (participe == null)
-            {
-                return HttpNotFound();
-            }
-            return View(participe);
+            return RedirectToAction("Delete", "participes", new { id = id });
         }
 
+
         // GET: participes/Delete/5
-        [Authorize(Roles = "admin")]
+        [Authorize]
         public ActionResult Delete(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            participe participe = db.participe.Find(id);
+            //participe participe = db.participe.Find(id);
+            long user_id = GetUserIdByLogin(User.Identity.GetUserName());
+            var part = from par in db.participe
+                       where par.seance_id == id && par.utilisateur_id == user_id
+                       select par;
+
+            participe participe = part.ToList().First();
+
+            seance s = db.seance.Find(participe.seance_id);
+            section sec = db.section.Find(s.section_id);
+            discipline d = db.discipline.Find(sec.discipline_id);
+
+            ViewData["titre"] = "Désinscription à la section " + sec.label + " de la discipline " + d.label;
+            ViewData["texte"] = "Comfirmez votre désinscription à la séance du " + s.jour_de_la_semaine + " de " + HourFormator("" + s.heure_debut) + " à " + HourFormator("" + s.heure_fin);
+
             if (participe == null)
             {
                 return HttpNotFound();
@@ -294,15 +292,21 @@ namespace SportAsso.Controllers
         }
 
         // POST: participes/Delete/5
-        [Authorize(Roles = "admin")]
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            participe participe = db.participe.Find(id);
+            //participe participe = db.participe.Find(id);
+            long user_id = GetUserIdByLogin(User.Identity.GetUserName());
+            var part = from par in db.participe
+                       where par.seance_id == id && par.utilisateur_id == user_id
+                       select par;
+
+            participe participe = part.ToList().First();
             db.participe.Remove(participe);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("MesInscriptions");
         }
 
         protected override void Dispose(bool disposing)

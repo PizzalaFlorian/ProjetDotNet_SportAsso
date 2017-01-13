@@ -89,13 +89,13 @@ namespace SportAsso.Controllers
         {
             long N_participant = GetNumberOfParticipantByID(seance_id);
             SportAssoEntities db = new SportAssoEntities();
-            long max = db.seance.Find(seance_id).seance_id;
+            long max = db.seance.Find(seance_id).places_max;
 
             if(N_participant < max)
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
 
         public ActionResult Inscriptions(long id)

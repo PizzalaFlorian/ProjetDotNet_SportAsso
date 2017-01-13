@@ -4,9 +4,12 @@
     ViewBag.Title = "Desinscription";
 }
 
-<h3>@ViewData["titre"]</h3>
+<h3 class="center">@ViewData["titre"]</h3>
 
-<h3>@ViewData["texte"]</h3>
+<h5 class="center">@ViewData["texte"]</h5>
+
+@using (Html.BeginForm())
+{
 <div>
  
     <dl>
@@ -26,12 +29,12 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Se Désinscrire" class="btn btn-red" /> | @Html.ActionLink("Annuler", "Index", "Home", null, new { @class = "btn btn - default" })
             
         </div>
-    }
+    
 </div>
+}
