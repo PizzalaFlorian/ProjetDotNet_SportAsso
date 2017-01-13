@@ -4,40 +4,37 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h3 class="center">Liste des paiments en attente</h3>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.a_payer)
+            <bold>Utilisateur</bold>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.seance.seance_id)
+            <bold>Séance</bold>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.utilisateur.login)
+            <bold>Satut du paiment</bold>
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+
         <td>
-            @Html.DisplayFor(modelItem => item.a_payer)
+            @SportAsso.Controllers.disciplinesController.GetUserFullNameByLogin(item.utilisateur.login)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.seance.seance_id)
+            @SportAsso.Controllers.participesController.GetSeancesInfo(item.seance_id)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.utilisateur.login)
+            @SportAsso.Controllers.participesController.StatutPaiment(item.a_payer)
         </td>
+        
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Mettre à jour le paiment", "Edit", "participes", new { id = item.seance_id + "-" + item.utilisateur.utilisateur_id }, new { @class = "btn btn - default" }) 
         </td>
     </tr>
 }

@@ -23,12 +23,14 @@ namespace SportAsso.Controllers
             ViewData["descriptionSection"] = "test";
             if (id.HasValue == false || id == 0)
             {
+                ViewBag.id = 0;
                 ViewBag.detail = false;
                 ViewData["titreSection"] = "Découvrez les plaisirs du sport chez Sports Asso !";
                 ViewData["descriptionSection"] = "Des dizaines de disciplines exaltantes dispnnibles. Encadré par des proffessionels du sport, venez découvrir les nombreuses activité propossé par nontre association !";
             }
             else
             {
+                ViewBag.id = id;
                 ViewBag.detail = true;
                 discipline d = discipline.Find(id);
                 ViewData["titreSection"] = d.label;
@@ -38,6 +40,16 @@ namespace SportAsso.Controllers
             ViewBag.list = q.ToList<section>();
 
             return View(discipline.ToList());
+        }
+
+        public static string getCssById(long id,long index)
+        {
+            if(id == index)
+            {
+                return "collection-item active";
+            }
+            return "collection-item";
+
         }
 
         private bool NeedToSwithByRole()

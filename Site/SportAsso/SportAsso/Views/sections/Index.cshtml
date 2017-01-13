@@ -8,18 +8,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.label)
+            <bold>discipline</bold>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.description)
+            <bold> label de la section</bold>
+        </th>
+        <th>
+            <bold> description de la section</bold>
         </th>
         
         <th>
             @Html.DisplayNameFor(model => model.prix)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.discipline.label)
-        </th>
+        
         <th>
             <bold>responsable</bold>
         </th>
@@ -28,7 +29,9 @@
 
 @foreach (var item in Model) {
     <tr>
-        
+        <td>
+            @Html.DisplayFor(modelItem => item.discipline.label)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.label)
         </td>
@@ -39,16 +42,13 @@
             @Html.DisplayFor(modelItem => item.prix)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.discipline.label)
-        </td>
-        <td>
             @SportAsso.Controllers.sectionsController.FindUserFullNameById(item.responsable_id)
         </td>
         <td>
-            @Html.ActionLink("Modifier la section", "Edit", "sections", new { id = item.section_id }, new { @class = "btn btn - default" })
+            @Html.ActionLink("Modifier la section", "Edit", "sections", new { id = item.section_id }, new { @class = "btn btn - default w210" })
             <br/>
             <br/>  
-            @Html.ActionLink("Supprimer la section", "Delete", "sections", new { id = item.section_id }, new { @class = "btn btn - default" })
+            @Html.ActionLink("Supprimer la section", "Delete", "sections", new { id = item.section_id }, new { @class = "btn btn - default w210" })
         </td>
     </tr>
 }

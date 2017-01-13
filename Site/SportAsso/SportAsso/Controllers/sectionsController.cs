@@ -112,7 +112,7 @@ namespace SportAsso.Controllers
         [Authorize(Roles = "encadrant , admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "section_id,description,discipline_id,label,prix,responsable_id")] section section)
+        public ActionResult Create([Bind(Include = "section_id,discipline_id,label,description,prix,responsable_id")] section section)
         {
             if (ModelState.IsValid)
             {

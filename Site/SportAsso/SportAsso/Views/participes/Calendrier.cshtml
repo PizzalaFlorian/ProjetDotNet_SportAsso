@@ -7,10 +7,10 @@
 <div class="flexRow">
     <div class="nav navbar-left collection w20">
         <!--<a href="#" class="collection-item active">Liste des Disciplines</a>-->
-        @Html.ActionLink("Liste des Disciplines", "Index", new { id = 0 }, new { @class = "collection-item active" })
+        @Html.ActionLink("Calendrier des Disciplines", "Calendrier", null, new { @class = SportAsso.Controllers.HomeController.getCssById(ViewBag.id, 0) })
         @foreach (var item in Model)
         {
-            @Html.ActionLink(item.label, "Calendrier", new { id = item.discipline_id }, new { @class = "collection-item" })
+            @Html.ActionLink(item.label, "Calendrier", new { id = item.discipline_id }, new { @class = SportAsso.Controllers.HomeController.getCssById(ViewBag.id, item.discipline_id) })
         }
     </div>
     <div class="panel panel-body pad5 w80">

@@ -47,6 +47,7 @@ namespace SportAsso.Controllers
         public ActionResult Calendrier(long? id)
         {
             var discipline = db.discipline;
+            ViewBag.id = 0;
             ViewBag.accueil = true;
             if (id.HasValue)
             {
@@ -215,19 +216,35 @@ namespace SportAsso.Controllers
 
         // GET: participes/Edit/5
         [Authorize(Roles = "admin")]
-        public ActionResult Edit(long? id)
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            participe participe = db.participe.Find(id);
+            string[] arg = id.Split('-');
+            long seance_id = Int64.Parse(arg[0]);
+            long utilisateur_id = Int64.Parse(arg[1]);
+            //participe participe = db.participe.Find(id);
+            var part = from par in db.participe
+                       where par.seance_id == seance_id && par.utilisateur_id == utilisateur_id
+                       select par;
+
+            participe participe = part.ToList().First();
             if (participe == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.seance_id = new SelectList(db.seance, "seance_id", "seance_id", participe.seance_id);
-            ViewBag.utilisateur_id = new SelectList(db.utilisateur, "utilisateur_id", "login", participe.utilisateur_id);
+
+            var choix = new List<SelectListItem>();
+            choix.Add(new SelectListItem() { Text = "Paiment valide", Value = "true" });
+            choix.Add(new SelectListItem() { Text = "Paiment en attente", Value = "false" });
+
+            ViewBag.seance_id = new SelectList(db.seance, "seance_id", "seance_id", seance_id);
+            ViewBag.utilisateur_id = new SelectList(db.utilisateur, "utilisateur_id", "login", utilisateur_id);
+            ViewBag.utilisateur_login = db.utilisateur.Find(utilisateur_id).login;
+            ViewBag.id = seance_id;
+            ViewBag.a_payer = choix;
             return View(participe);
         }
 

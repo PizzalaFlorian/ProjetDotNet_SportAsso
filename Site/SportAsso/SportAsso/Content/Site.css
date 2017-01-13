@@ -84,3 +84,7 @@ textarea {
 .btn-red:hover{
     background-color: darkred !important;
 }
+
+.w210{
+    width:210px !important;
+}

@@ -186,7 +186,7 @@ namespace SportAsso.Controllers
             {
                 db.seance.Add(seance);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Redirect");
             }
 
             ViewBag.lieu_id = new SelectList(db.lieu, "lieu_id", "label", seance.lieu_id);
